@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AuthGuardian</string>
     <string name="btn_push_me">Button</string>
+    <string name="main_fragment_hello">Hello</string>
 </resources>
