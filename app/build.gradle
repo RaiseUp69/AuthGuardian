@@ -71,6 +71,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.kotlinCoroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.kotlinCoroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$rootProject.kotlinCoroutinesVersion")
+    implementation 'androidx.annotation:annotation:1.6.0'
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.kotlinCoroutinesVersion")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

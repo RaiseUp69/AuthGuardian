@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.AuthGuardian" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -6,4 +6,19 @@
     </style>
 
     <style name="Theme.AuthGuardian" parent="Base.Theme.AuthGuardian" />
+
+    <!-- contained button -->
+    <style name="Widget.AuthGuardian.Button.Filled" parent="Widget.Material3.Button">
+
+    </style>
+
+    <!-- outlined button -->
+    <style name="Widget.AuthGuardian.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+
+    </style>
+
+    <!-- text button -->
+    <style name="Widget.AuthGuardian.Button.Text" parent="Widget.Material3.Button.TextButton">
+
+    </style>
 </resources>
