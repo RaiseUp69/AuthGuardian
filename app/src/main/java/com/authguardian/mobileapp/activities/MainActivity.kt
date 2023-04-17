@@ -1,7 +1,8 @@
-package com.authguardian.mobileapp
+package com.authguardian.mobileapp.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.authguardian.mobileapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
