@@ -8,34 +8,44 @@
     tools:context=".fragments.AuthenticationMethodFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtChoosePairingMethod"
         style="@style/TextAppearance.MaterialComponents.Headline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/screen_horizontal_margin"
         android:text="@string/choose_pairing_method"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnPairingByQR"
-        style="@style/Widget.AuthGuardian.Button.Outlined"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/pairing_by_qr"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/txtChoosePairingMethod"
+        app:layout_constraintVertical_bias="0.55">
 
-    <Button
-        android:id="@+id/btnPairingByIP"
-        style="@style/Widget.AuthGuardian.Button.Outlined"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pairing_by_ip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPairingByQR" />
+        <Button
+            android:id="@+id/btnPairingByQR"
+            style="@style/Widget.AuthGuardian.Button.Material"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/pairing_by_qr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/btnPairingByIP"
+            style="@style/Widget.AuthGuardian.Button.Material"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/pairing_by_ip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPairingByQR" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
