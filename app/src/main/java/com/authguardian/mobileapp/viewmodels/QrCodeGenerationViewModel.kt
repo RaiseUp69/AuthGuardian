@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.zxing.BarcodeFormat
-import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,12 +14,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class QrCodeGenerationViewModel(private val application: Application) : AndroidViewModel(application), CoroutineScope {
+class QrCodeGenerationViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
 
     private val job = SupervisorJob()
 
-    // TODO: Why IO?
-    override val coroutineContext: CoroutineContext = Dispatchers.IO + job
+    override val coroutineContext: CoroutineContext = Dispatchers.Main + job
 
     private var ssid: String? = null
     private var password: String? = null
@@ -45,10 +43,9 @@ class QrCodeGenerationViewModel(private val application: Application) : AndroidV
 
     private fun getQrCodeBitmap() {
         _isLoading.postValue(true)
-        launch {
+        launch(Dispatchers.IO) {
             val size = 512
             val qrCodeContent = "WIFI:S:$ssid;T:WPA;P:$password;;"
-            val hints = hashMapOf<EncodeHintType, Int>().also { it[EncodeHintType.MARGIN] = 50 } // Make the QR code buffer border narrower
             val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size)
             _qrCode.postValue(Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
                 for (x in 0 until size) {

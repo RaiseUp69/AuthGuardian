@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.util.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.authguardian.mobileapp.consts.QrCode
 import com.authguardian.mobileapp.databinding.FragmentQrCodeScannerBinding
 import com.authguardian.mobileapp.viewmodels.QrCodeScannerViewModel
 import com.authguardian.mobileapp.viewmodels.QrCodeScannerViewModel.Companion.TAG
@@ -63,6 +65,9 @@ class QrCodeScannerFragment : Fragment() {
                     val qr = detectedItems.valueAt(0)
                     qr.wifi.let {
                         Log.d(TAG, "SSID: ${it.ssid}, Password: ${it.password}")
+                        if (it.ssid == QrCode.USER_SSID && it.password == QrCode.USER_PASSWORD) {
+                            findNavController().navigate(QrCodeScannerFragmentDirections.actionQrCodeScannerFragmentToAuthorizationFragment())
+                        }
                     }
                 }
             }

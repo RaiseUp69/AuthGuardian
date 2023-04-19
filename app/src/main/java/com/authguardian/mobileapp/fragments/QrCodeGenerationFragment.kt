@@ -8,6 +8,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.authguardian.mobileapp.consts.QrCode.USER_PASSWORD
+import com.authguardian.mobileapp.consts.QrCode.USER_SSID
 import com.authguardian.mobileapp.databinding.FragmentQrCodeGenerationFragmentBinding
 import com.authguardian.mobileapp.viewmodels.QrCodeGenerationViewModel
 
@@ -33,7 +35,8 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.init("ssid", "password")
+
+        viewModel.init(ssid = USER_SSID, password = USER_PASSWORD)
 
         viewModel.qrCode.observe(viewLifecycleOwner) { qrCode ->
             binding.imgBarcode.setImageBitmap(qrCode)
