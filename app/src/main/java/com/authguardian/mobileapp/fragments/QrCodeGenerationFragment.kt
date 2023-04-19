@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.databinding.FragmentQrCodeGenerationFragmentBinding
 import com.authguardian.mobileapp.viewmodels.QrCodeGenerationViewModel
 
-class QrCodeGenerationFragment : Fragment() {
+class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
 
     private val viewModel: QrCodeGenerationViewModel by viewModels()
 
@@ -42,5 +43,14 @@ class QrCodeGenerationFragment : Fragment() {
             binding.pbLoading.isVisible = isLoading
         }
 
+        binding.btnScanQrCode?.setOnClickListener(this@QrCodeGenerationFragment)
+    }
+
+    override fun onClick(view: View?) {
+        when (view) {
+            binding.btnScanQrCode -> {
+                findNavController().navigate(QrCodeGenerationFragmentDirections.actionQrCodeGenerationFragmentToQrCodeScanner())
+            }
+        }
     }
 }

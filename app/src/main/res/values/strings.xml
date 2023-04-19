@@ -21,4 +21,6 @@
     <string name="back">back</string>
     <string name="generate_qr_code">Generate QR code</string>
     <string name="barcode">barcode</string>
+    <string name="i_want_scan">I want scan!</string>
+    <string name="camera_permission_rejected_first_time">It seems that you have not given permission to the camera, without it you will not be able to scan the QR code on the screen of another device, let\'s try each time</string>
 </resources>
