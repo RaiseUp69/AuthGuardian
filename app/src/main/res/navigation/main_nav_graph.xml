@@ -11,46 +11,13 @@
         android:label="fragment_auth_method"
         tools:layout="@layout/fragment_auth_method">
         <action
-            android:id="@+id/action_authMethodFragment_to_qrCodeGenerationFragment"
-            app:destination="@id/qrCodeGenerationFragment"
+            android:id="@+id/action_authMethodFragment_to_qr_code_authentication_graph"
+            app:destination="@id/qr_code_authentication_graph"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
-    <fragment
-        android:id="@+id/qrCodeGenerationFragment"
-        android:name="com.authguardian.mobileapp.fragments.QrCodeGenerationFragment"
-        android:label="fragment_qr_code_generation"
-        tools:layout="@layout/fragment_qr_code_generation_fragment">
-
-        <action
-            android:id="@+id/action_qrCodeGenerationFragment_to_qrCodeScanner"
-            app:destination="@id/qrCodeScannerFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/qrCodeScannerFragment"
-        android:name="com.authguardian.mobileapp.fragments.QrCodeScannerFragment"
-        android:label="fragment_qr_code_scanner"
-        tools:layout="@layout/fragment_qr_code_scanner">
-        <action
-            android:id="@+id/action_qrCodeScannerFragment_to_authorizationFragment"
-            app:destination="@id/authorizationFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/authorizationFragment"
-        android:name="com.authguardian.mobileapp.fragments.AuthorizationFragment"
-        android:label="fragment_authorization"
-        tools:layout="@layout/fragment_authorization" />
+    <include app:graph="@navigation/qr_code_authentication_graph" />
 </navigation>
