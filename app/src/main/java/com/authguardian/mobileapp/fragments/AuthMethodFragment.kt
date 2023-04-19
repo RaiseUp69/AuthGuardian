@@ -39,7 +39,7 @@ class AuthMethodFragment : Fragment(), OnClickListener {
     override fun onClick(view: View?) {
         when (view) {
             binding.btnNsd -> {
-                findNavController().navigate(AuthMethodFragmentDirections.actionAuthenticationMethodFragmentToAuthenticationFragment())
+                findNavController().navigate(AuthMethodFragmentDirections.actionAuthMethodFragmentToNetworkServiceDiscoverFragment())
             }
         }
     }
