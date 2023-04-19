@@ -11,8 +11,8 @@
         android:label="fragment_auth_method"
         tools:layout="@layout/fragment_auth_method">
         <action
-            android:id="@+id/action_authenticationMethodFragment_to_authenticationFragment"
-            app:destination="@id/authenticationFragment"
+            android:id="@+id/action_authMethodFragment_to_networkServiceDiscoverFragment"
+            app:destination="@id/networkServiceDiscoverFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -20,10 +20,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/authenticationFragment"
-        android:name="com.authguardian.mobileapp.fragments.AuthenticationFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_authentication">
+        android:id="@+id/networkServiceDiscoverFragment"
+        android:name="com.authguardian.mobileapp.fragments.NetworkServiceDiscoverFragment"
+        android:label="fragment_network_service_discover"
+        tools:layout="@layout/fragment_network_service_discover_fragment">
         <action
             android:id="@+id/action_authenticationFragment_to_authorizationFragment"
             app:destination="@id/authorizationFragment" />
