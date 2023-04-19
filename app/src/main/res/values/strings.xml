@@ -19,4 +19,6 @@
 
     <string name="network_service_discovery">Network service discovery</string>
     <string name="back">back</string>
+    <string name="generate_qr_code">Generate QR code</string>
+    <string name="barcode">barcode</string>
 </resources>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="32dp"
+    tools:context=".fragments.QrCodeGenerationFragment">
+
+    <FrameLayout
+        android:id="@+id/qrCodeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:indeterminate="true" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            app:cardCornerRadius="16dp">
+
+            <ImageView
+                android:id="@+id/imgBarcode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/barcode"
+                tools:src="@tools:sample/avatars" />
+
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+
+
+    <Button
+        android:id="@+id/btnPushMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:paddingHorizontal="44dp"
+        android:paddingVertical="12dp"
+        android:text="@string/login" />
+</FrameLayout>
