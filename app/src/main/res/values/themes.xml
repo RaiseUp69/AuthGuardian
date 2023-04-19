@@ -28,7 +28,7 @@
     <style name="Widget.AuthGuardian.Button.Material" parent="Widget.Material3.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">48dp</item>
+        <item name="android:minHeight">64dp</item>
         <item name="layout_constraintWidth_max">320dp</item>
         <item name="maxWidth">320dp</item>
         <item name="shapeAppearanceOverlay">@style/AuthGuardian.Button.ShapeAppearance</item>

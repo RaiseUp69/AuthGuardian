@@ -12,15 +12,10 @@ import com.authguardian.mobileapp.viewmodels.AuthenticationViewModel
 
 class AuthenticationFragment : Fragment() {
 
-    companion object {
-
-        /*        @JvmStatic
-                fun newInstance() = AuthenticationFragment()*/
-    }
+    private val viewModel: AuthenticationViewModel by viewModels()
 
     private var _binding: FragmentAuthenticationBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: AuthenticationViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

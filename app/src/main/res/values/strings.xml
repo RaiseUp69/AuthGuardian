@@ -15,7 +15,7 @@
     <string name="login_failed">"Login failed"</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="choose_pairing_method">Choose pairing method:</string>
-    <string name="pairing_by_qr">Pairing by QR</string>
-    <string name="pairing_by_ip">Pairing by IP</string>
+    <string name="choose_auth_method">Authentication method</string>
+
+    <string name="network_service_discovery">Network service discovery</string>
 </resources>

@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/authenticationMethodFragment">
+    app:startDestination="@id/authMethodFragment">
 
     <fragment
-        android:id="@+id/authenticationMethodFragment"
-        android:name="com.authguardian.mobileapp.fragments.AuthenticationMethodFragment"
-        android:label="fragment_authentication_method"
-        tools:layout="@layout/fragment_authentication_method">
+        android:id="@+id/authMethodFragment"
+        android:name="com.authguardian.mobileapp.fragments.AuthMethodFragment"
+        android:label="fragment_auth_method"
+        tools:layout="@layout/fragment_auth_method">
         <action
             android:id="@+id/action_authenticationMethodFragment_to_authenticationFragment"
             app:destination="@id/authenticationFragment"
