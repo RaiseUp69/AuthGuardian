@@ -18,4 +18,5 @@
     <string name="choose_auth_method">Authentication method</string>
 
     <string name="network_service_discovery">Network service discovery</string>
+    <string name="back">back</string>
 </resources>
