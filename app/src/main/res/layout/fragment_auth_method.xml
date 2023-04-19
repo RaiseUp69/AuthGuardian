@@ -34,7 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/generate_qr_code"
-            app:icon="@drawable/ic_network_service_discovery"
+            app:icon="@drawable/ic_qr_code"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
