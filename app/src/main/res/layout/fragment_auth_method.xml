@@ -33,7 +33,7 @@
             style="@style/Widget.AuthGuardian.Button.Material"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/network_service_discovery"
+            android:text="@string/generate_qr_code"
             app:icon="@drawable/ic_network_service_discovery"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
