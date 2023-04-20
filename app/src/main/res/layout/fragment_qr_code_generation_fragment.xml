@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,10 +11,13 @@
         android:id="@+id/qrCodeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ProgressBar
-            android:id="@+id/pbLoading"
+            android:id="@+id/spinner"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_gravity="center_horizontal|center_vertical"
@@ -27,7 +30,7 @@
             app:cardCornerRadius="16dp">
 
             <ImageView
-                android:id="@+id/imgBarcode"
+                android:id="@+id/imgQrCode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/barcode"
@@ -36,6 +39,18 @@
         </androidx.cardview.widget.CardView>
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/txtPermissionRejectedMessage"
+        style="@style/MaterialAlertDialog.Material3.Body.Text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/camera_permission_rejected_first_time"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qrCodeLayout"
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/btnScanQrCode"
@@ -43,5 +58,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
-        android:text="@string/i_want_scan" />
-</FrameLayout>
+        android:text="@string/i_want_scan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPermissionRejectedMessage"
+        app:layout_constraintVertical_bias="1" />
+</androidx.constraintlayout.widget.ConstraintLayout>
