@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.fragments
+package com.authguardian.mobileapp.fragment
 
 import android.Manifest.permission.CAMERA
 import android.annotation.SuppressLint
@@ -16,10 +16,10 @@ import androidx.core.util.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.authguardian.mobileapp.consts.QrCode
+import com.authguardian.mobileapp.const.QrCode
 import com.authguardian.mobileapp.databinding.FragmentQrCodeScannerBinding
-import com.authguardian.mobileapp.viewmodels.QrCodeScannerViewModel
-import com.authguardian.mobileapp.viewmodels.QrCodeScannerViewModel.Companion.TAG
+import com.authguardian.mobileapp.viewmodel.QrCodeScannerViewModel
+import com.authguardian.mobileapp.viewmodel.QrCodeScannerViewModel.Companion.TAG
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.vision.CameraSource

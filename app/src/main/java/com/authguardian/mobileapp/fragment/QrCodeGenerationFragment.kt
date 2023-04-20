@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.fragments
+package com.authguardian.mobileapp.fragment
 
 import android.Manifest
 import android.content.Intent
@@ -15,11 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
-import com.authguardian.mobileapp.consts.Extra
-import com.authguardian.mobileapp.consts.QrCode.USER_PASSWORD
-import com.authguardian.mobileapp.consts.QrCode.USER_SSID
+import com.authguardian.mobileapp.const.Extra
+import com.authguardian.mobileapp.const.QrCode.USER_PASSWORD
+import com.authguardian.mobileapp.const.QrCode.USER_SSID
 import com.authguardian.mobileapp.databinding.FragmentQrCodeGenerationFragmentBinding
-import com.authguardian.mobileapp.viewmodels.QrCodeGenerationViewModel
+import com.authguardian.mobileapp.viewmodel.QrCodeGenerationViewModel
 
 class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
 
