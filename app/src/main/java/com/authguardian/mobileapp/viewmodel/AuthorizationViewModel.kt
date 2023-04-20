@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.viewmodels
+package com.authguardian.mobileapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 

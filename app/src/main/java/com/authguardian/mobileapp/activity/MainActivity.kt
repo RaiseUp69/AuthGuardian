@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.activities
+package com.authguardian.mobileapp.activity
 
 import android.os.Bundle
 import android.view.MenuItem

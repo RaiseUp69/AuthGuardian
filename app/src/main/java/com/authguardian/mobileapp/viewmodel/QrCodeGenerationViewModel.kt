@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.viewmodels
+package com.authguardian.mobileapp.viewmodel
 
 import android.app.Application
 import android.graphics.Bitmap

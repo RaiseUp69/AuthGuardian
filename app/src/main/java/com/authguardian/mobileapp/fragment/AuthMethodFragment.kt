@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.fragments
+package com.authguardian.mobileapp.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.databinding.FragmentAuthMethodBinding
-import com.authguardian.mobileapp.viewmodels.AuthMethodViewModel
+import com.authguardian.mobileapp.viewmodel.AuthMethodViewModel
 
 class AuthMethodFragment : Fragment(), OnClickListener {
 

@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.fragments
+package com.authguardian.mobileapp.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.authguardian.mobileapp.R
-import com.authguardian.mobileapp.viewmodels.AuthorizationViewModel
+import com.authguardian.mobileapp.viewmodel.AuthorizationViewModel
 
 class AuthorizationFragment : Fragment() {
 

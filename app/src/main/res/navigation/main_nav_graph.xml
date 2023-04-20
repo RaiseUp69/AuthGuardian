@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/authMethodFragment"
-        android:name="com.authguardian.mobileapp.fragments.AuthMethodFragment"
+        android:name="com.authguardian.mobileapp.fragment.AuthMethodFragment"
         android:label="fragment_auth_method"
         tools:layout="@layout/fragment_auth_method">
         <action
