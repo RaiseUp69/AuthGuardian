@@ -1,5 +1,6 @@
 package com.authguardian.mobileapp.fragments
 
+import android.Manifest.permission.CAMERA
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
@@ -10,7 +11,6 @@ import android.view.SurfaceHolder
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.util.isNotEmpty
 import androidx.fragment.app.Fragment
@@ -36,6 +36,23 @@ class QrCodeScannerFragment : Fragment() {
 
     private var _binding: FragmentQrCodeScannerBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        /*
+        * For the case when user got this screen,
+        * minimized the app,
+        * deny camera permission,
+        * and back into app
+        * */
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            findNavController().popBackStack()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,23 +94,17 @@ class QrCodeScannerFragment : Fragment() {
     }
 
     private fun setupCamera() {
-        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            BarcodeDetector.Builder(requireContext()).setBarcodeFormats(QR_CODE).build().apply {
-                setProcessor(processor)
-                if (!isOperational) {
-                    Log.d(TAG, "Native QR detector dependencies not available!")
-                    return
-                }
-                cameraSource = CameraSource.Builder(requireContext(), this)
-                    .setAutoFocusEnabled(true)
-                    .setFacing(CameraSource.CAMERA_FACING_BACK).build()
+        BarcodeDetector.Builder(requireContext()).setBarcodeFormats(QR_CODE).build().apply {
+            setProcessor(processor)
+            if (!isOperational) {
+                Log.d(TAG, "Native QR detector dependencies not available!")
+                return
             }
-        } else {
-            requestPermission.launch(android.Manifest.permission.CAMERA)
+            cameraSource = CameraSource.Builder(requireContext(), this)
+                .setAutoFocusEnabled(true)
+                .setFacing(CameraSource.CAMERA_FACING_BACK).build()
         }
     }
-
-    private val requestPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
 
     private val callback = object : SurfaceHolder.Callback {
         @SuppressLint("MissingPermission")
