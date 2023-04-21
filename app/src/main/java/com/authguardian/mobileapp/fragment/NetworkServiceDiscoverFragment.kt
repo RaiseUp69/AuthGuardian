@@ -40,7 +40,6 @@ class NetworkServiceDiscoverFragment : Fragment(), View.OnClickListener {
         binding.btnClient.setOnClickListener(this@NetworkServiceDiscoverFragment)
         binding.btnServer.setOnClickListener(this@NetworkServiceDiscoverFragment)
 
-
         return binding.root
     }
 
