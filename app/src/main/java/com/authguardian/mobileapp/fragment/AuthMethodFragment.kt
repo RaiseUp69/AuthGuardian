@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.databinding.FragmentAuthMethodBinding
+import com.authguardian.mobileapp.extension.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.AuthMethodViewModel
 
 class AuthMethodFragment : Fragment(), OnClickListener {
@@ -33,13 +34,18 @@ class AuthMethodFragment : Fragment(), OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnQRCode.setOnClickListener(this@AuthMethodFragment)
         binding.btnNsd.setOnClickListener(this@AuthMethodFragment)
     }
 
     override fun onClick(view: View?) {
         when (view) {
+            binding.btnQRCode -> {
+                navigate(findNavController(), AuthMethodFragmentDirections.actionAuthMethodFragmentToQrCodeAuthenticationGraph())
+            }
+
             binding.btnNsd -> {
-                findNavController().navigate(AuthMethodFragmentDirections.actionAuthMethodFragmentToQrCodeAuthenticationGraph())
+                navigate(findNavController(), AuthMethodFragmentDirections.actionAuthMethodFragmentToNsdAuthenticationGraph())
             }
         }
     }

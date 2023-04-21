@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.const.Extra.PERMISSION_DENIED_PERMANENTLY
+import com.authguardian.mobileapp.extension.NavigationUtils.navigate
 
 class RequestCameraPermissionFragment : Fragment() {
 
@@ -31,7 +32,7 @@ class RequestCameraPermissionFragment : Fragment() {
 
     private val requestPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
-            findNavController().navigate(RequestCameraPermissionFragmentDirections.actionRequestCameraPermissionFragmentToQrCodeScannerFragment())
+            navigate(findNavController(), RequestCameraPermissionFragmentDirections.actionRequestCameraPermissionFragmentToQrCodeScannerFragment())
         } else {
             findNavController().previousBackStackEntry?.savedStateHandle?.set(
                 PERMISSION_DENIED_PERMANENTLY, !shouldShowRequestPermissionRationale(CAMERA)

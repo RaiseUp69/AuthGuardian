@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.const.QrCode
 import com.authguardian.mobileapp.databinding.FragmentQrCodeScannerBinding
+import com.authguardian.mobileapp.extension.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.QrCodeScannerViewModel
 import com.authguardian.mobileapp.viewmodel.QrCodeScannerViewModel.Companion.TAG
 import com.google.android.gms.common.ConnectionResult
@@ -83,7 +84,7 @@ class QrCodeScannerFragment : Fragment() {
                     qr.wifi.let {
                         Log.d(TAG, "SSID: ${it.ssid}, Password: ${it.password}")
                         if (it.ssid == QrCode.USER_SSID && it.password == QrCode.USER_PASSWORD) {
-                            findNavController().navigate(QrCodeScannerFragmentDirections.actionQrCodeScannerFragmentToAuthorizationFragment())
+                            navigate(findNavController(), QrCodeScannerFragmentDirections.actionQrCodeScannerFragmentToAuthorizationFragment())
                         }
                     }
                 }
