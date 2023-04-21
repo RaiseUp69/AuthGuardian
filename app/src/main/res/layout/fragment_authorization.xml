@@ -4,13 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="32dp"
-    tools:context=".fragments.AuthorizationFragment">
+    tools:context=".fragment.AuthorizationFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginBottom="54dp"
         android:text="@string/congratulations_you_have_successfully_logged_in"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />

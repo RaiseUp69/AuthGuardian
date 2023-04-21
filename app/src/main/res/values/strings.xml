@@ -4,7 +4,6 @@
     <string name="main_fragment_hello">Hello</string>
     <string name="login">Login</string>
     <string name="congratulations_you_have_successfully_logged_in">Congratulations, you have successfully logged in!</string>
-    <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -13,9 +12,19 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="choose_pairing_method">Choose pairing method:</string>
-    <string name="pairing_by_qr">Pairing by QR</string>
-    <string name="pairing_by_ip">Pairing by IP</string>
+    <string name="choose_auth_method">Authentication method</string>
+    <string name="network_service_discovery">Network service discovery</string>
+    <string name="back">back</string>
+    <string name="generate_qr_code">QR code</string>
+    <string name="barcode">barcode</string>
+    <string name="i_want_scan">I want scan!</string>
+    <string name="camera_permission_rejected_first_time">It seems that you have not given permission to the camera, without it you will not be able to scan the QR code on the screen of another device, let\'s try each time</string>
+    <string name="camera_permission_rejected_second_time">Go to settings and enable camera permission</string>
+    <string name="go_to_settings">Go to settings</string>
+    <string name="open_this_screen_in_another_device_in_same_wifi_network">Open this screen in another device in same WIFI network</string>
+    <string name="server">Server</string>
+    <string name="client">Client</string>
+    <string name="i_want_to_be_server">I want to be server!</string>
+    <string name="i_want_to_be_client">I want to be client</string>
 </resources>

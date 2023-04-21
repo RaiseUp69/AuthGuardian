@@ -8,17 +8,31 @@
     <style name="Theme.AuthGuardian" parent="Base.Theme.AuthGuardian" />
 
     <!-- contained button -->
-    <style name="Widget.AuthGuardian.Button.Filled" parent="Widget.Material3.Button">
+    <style name="Widget.AuthGuardian.Button" parent="Widget.Material3.Button">
 
     </style>
 
-    <!-- outlined button -->
-    <style name="Widget.AuthGuardian.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+    <!-- region entrypoint -->
 
+    <style name="AuthGuardian.Button.ShapeAppearance" parent="Widget.AuthGuardian.Button">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">14dp</item>
     </style>
 
-    <!-- text button -->
-    <style name="Widget.AuthGuardian.Button.Text" parent="Widget.Material3.Button.TextButton">
-
+    <style name="AuthGuardian.Button.TextAppearance" parent="Widget.AuthGuardian.Button">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
+
+    <style name="Widget.AuthGuardian.Button.Material" parent="Widget.Material3.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">64dp</item>
+        <item name="layout_constraintWidth_max">320dp</item>
+        <item name="maxWidth">320dp</item>
+        <item name="shapeAppearanceOverlay">@style/AuthGuardian.Button.ShapeAppearance</item>
+        <item name="android:textAppearance">@style/AuthGuardian.Button.TextAppearance</item>
+    </style>
+    <!-- endregion -->
 </resources>
