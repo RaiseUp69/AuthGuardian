@@ -18,7 +18,7 @@ class RequestCameraPermissionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (ContextCompat.checkSelfPermission(requireContext(), CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            findNavController().navigate(RequestCameraPermissionFragmentDirections.actionRequestCameraPermissionFragmentToQrCodeScannerFragment())
+            navigate(findNavController(), RequestCameraPermissionFragmentDirections.actionRequestCameraPermissionFragmentToQrCodeScannerFragment())
         } else {
             requestPermission.launch(CAMERA)
         }
