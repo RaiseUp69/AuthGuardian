@@ -14,11 +14,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.const.Extra
 import com.authguardian.mobileapp.const.QrCode.USER_PASSWORD
 import com.authguardian.mobileapp.const.QrCode.USER_SSID
 import com.authguardian.mobileapp.databinding.FragmentQrCodeGenerationFragmentBinding
+import com.authguardian.mobileapp.extension.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.QrCodeGenerationViewModel
 
 class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
@@ -36,7 +36,7 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
             with(binding) {
                 txtPermissionRejectedMessage.isVisible = false
                 qrCodeLayout.alpha = 1F
-                btnScanQrCode.text = getString(R.string.i_want_scan)
+                btnScanQrCode.text = getString(com.authguardian.mobileapp.R.string.i_want_scan)
             }
             needToGoSettings = false
         }
@@ -86,7 +86,7 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
                         )
                     }
                 } else {
-                    findNavController().navigate(QrCodeGenerationFragmentDirections.actionQrCodeGenerationFragmentToRequestCameraPermissionFragment())
+                    navigate(findNavController(), QrCodeGenerationFragmentDirections.actionQrCodeGenerationFragmentToRequestCameraPermissionFragment())
                 }
             }
         }
@@ -99,13 +99,13 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
             ?.observe(viewLifecycleOwner) { isPermissionDeniedPermanently ->
                 if (isPermissionDeniedPermanently) {
                     txtPermissionRejectedMessage.isVisible = true
-                    txtPermissionRejectedMessage.text = getString(R.string.camera_permission_rejected_second_time)
+                    txtPermissionRejectedMessage.text = getString(com.authguardian.mobileapp.R.string.camera_permission_rejected_second_time)
                     qrCodeLayout.alpha = 0.1F
                     needToGoSettings = true
-                    btnScanQrCode.text = getString(R.string.go_to_settings)
+                    btnScanQrCode.text = getString(com.authguardian.mobileapp.R.string.go_to_settings)
                 } else {
                     txtPermissionRejectedMessage.isVisible = true
-                    txtPermissionRejectedMessage.text = getString(R.string.camera_permission_rejected_first_time)
+                    txtPermissionRejectedMessage.text = getString(com.authguardian.mobileapp.R.string.camera_permission_rejected_first_time)
                     qrCodeLayout.alpha = 0.1F
                     needToGoSettings = false
                 }
