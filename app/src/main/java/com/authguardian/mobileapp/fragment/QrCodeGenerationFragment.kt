@@ -29,19 +29,6 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentQrCodeGenerationFragmentBinding? = null
     private val binding get() = _binding!!
 
-    override fun onResume() {
-        super.onResume()
-        // When user back to app from settings
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            with(binding) {
-                txtPermissionRejectedMessage.isVisible = false
-                qrCodeLayout.alpha = 1F
-                btnScanQrCode.text = getString(com.authguardian.mobileapp.R.string.i_want_scan)
-            }
-            needToGoSettings = false
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,65 +37,107 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViewModel()
+        initViews()
+        checkCameraPermission()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.init(ssid = USER_SSID, password = USER_PASSWORD)
-
-        with(binding) {
-            viewModel.qrCode.observe(viewLifecycleOwner) { qrCode ->
-                imgQrCode.setImageBitmap(qrCode)
-            }
-            viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-                spinner.isVisible = isLoading
-            }
-
-            btnScanQrCode.setOnClickListener(this@QrCodeGenerationFragment)
-        }
-
-        checkCameraPermission()
+    override fun onResume() {
+        super.onResume()
+        handleResume()
     }
 
     override fun onClick(view: View?) {
         when (view) {
-            binding.btnScanQrCode -> {
-                if (needToGoSettings) {
-                    requireActivity().let {
-                        it.startActivity(
-                            Intent(
-                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                Uri.parse("package:${it.packageName}")
-                            )
-                        )
-                    }
-                } else {
-                    navigate(findNavController(), QrCodeGenerationFragmentDirections.actionQrCodeGenerationFragmentToRequestCameraPermissionFragment())
-                }
-            }
+            binding.btnScanQrCode -> handleBtnScanQrCodeClick()
         }
     }
 
-    private fun checkCameraPermission() = with(binding) {
+    private fun initViewModel() {
+        viewModel.init(ssid = USER_SSID, password = USER_PASSWORD)
+        viewModel.qrCode.observe(viewLifecycleOwner) { qrCode ->
+            binding.imgQrCode.setImageBitmap(qrCode)
+        }
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.spinner.isVisible = isLoading
+        }
+    }
+
+    private fun initViews() {
+        binding.btnScanQrCode.setOnClickListener(this)
+    }
+
+    private fun handleResume() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            updateUiForPermissionGranted()
+        }
+    }
+
+    private fun updateUiForPermissionGranted() {
+        with(binding) {
+            txtPermissionRejectedMessage.isVisible = false
+            qrCodeLayout.alpha = 1F
+            btnScanQrCode.text = getString(com.authguardian.mobileapp.R.string.i_want_scan)
+        }
+        needToGoSettings = false
+    }
+
+    private fun handleBtnScanQrCodeClick() {
+        if (needToGoSettings) {
+            goToSettings()
+        } else {
+            navigateToRequestCameraPermission()
+        }
+    }
+
+    private fun goToSettings() {
+        requireActivity().let {
+            it.startActivity(
+                Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.parse("package:${it.packageName}")
+                )
+            )
+        }
+    }
+
+    private fun navigateToRequestCameraPermission() {
+        navigate(findNavController(), QrCodeGenerationFragmentDirections.actionQrCodeGenerationFragmentToRequestCameraPermissionFragment())
+    }
+
+    private fun checkCameraPermission() {
         findNavController().currentBackStackEntry
             ?.savedStateHandle
             ?.getLiveData<Boolean>(Extra.PERMISSION_DENIED_PERMANENTLY)
             ?.observe(viewLifecycleOwner) { isPermissionDeniedPermanently ->
-                if (isPermissionDeniedPermanently) {
-                    txtPermissionRejectedMessage.isVisible = true
-                    txtPermissionRejectedMessage.text = getString(com.authguardian.mobileapp.R.string.camera_permission_rejected_second_time)
-                    qrCodeLayout.alpha = 0.1F
-                    needToGoSettings = true
-                    btnScanQrCode.text = getString(com.authguardian.mobileapp.R.string.go_to_settings)
-                } else {
-                    txtPermissionRejectedMessage.isVisible = true
-                    txtPermissionRejectedMessage.text = getString(com.authguardian.mobileapp.R.string.camera_permission_rejected_first_time)
-                    qrCodeLayout.alpha = 0.1F
-                    needToGoSettings = false
-                }
+                handlePermissionDenied(isPermissionDeniedPermanently)
             }
+    }
+
+    private fun handlePermissionDenied(isPermissionDeniedPermanently: Boolean) {
+        with(binding) {
+            txtPermissionRejectedMessage.isVisible = true
+            txtPermissionRejectedMessage.text = getString(
+                if (isPermissionDeniedPermanently)
+                    com.authguardian.mobileapp.R.string.camera_permission_rejected_second_time
+                else
+                    com.authguardian.mobileapp.R.string.camera_permission_rejected_first_time
+            )
+            qrCodeLayout.alpha = 0.1F
+            needToGoSettings = isPermissionDeniedPermanently
+            btnScanQrCode.text = getString(
+                if (isPermissionDeniedPermanently)
+                    com.authguardian.mobileapp.R.string.go_to_settings
+                else
+                    com.authguardian.mobileapp.R.string.i_want_scan
+            )
+        }
     }
 }
