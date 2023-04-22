@@ -10,13 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentNsdClientBinding
 import com.authguardian.mobileapp.utils.UniversalUtils.getDeviceBrandAndModel
 import com.authguardian.mobileapp.viewmodel.NsdClientViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class NsdClientFragment : Fragment() {
+class NsdClientFragment : Fragment(), View.OnClickListener {
 
     private val viewModel: NsdClientViewModel by viewModels()
 
@@ -55,6 +56,16 @@ class NsdClientFragment : Fragment() {
 
         viewModel.receivedMessage.observe(viewLifecycleOwner) { message ->
             binding.txtMessage.text = message
+        }
+
+        binding.btnBack.setOnClickListener(this@NsdClientFragment)
+    }
+
+    override fun onClick(view: View?) {
+        when (view) {
+            binding.btnBack -> {
+                findNavController().popBackStack()
+            }
         }
     }
 

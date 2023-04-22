@@ -16,7 +16,7 @@ import com.authguardian.mobileapp.utils.NsdServiceUtils.Companion.SERVICE_TYPE
 import com.authguardian.mobileapp.utils.UniversalUtils
 import com.authguardian.mobileapp.viewmodel.NsdServerViewModel
 
-class NsdServerFragment : Fragment() {
+class NsdServerFragment : Fragment(), View.OnClickListener {
 
     private val viewModel: NsdServerViewModel by viewModels()
 
@@ -58,6 +58,16 @@ class NsdServerFragment : Fragment() {
 
         viewModel.receivedMessage.observe(viewLifecycleOwner) { message ->
             binding.txtMessage.text = message
+        }
+
+        binding.btnBack.setOnClickListener(this@NsdServerFragment)
+    }
+
+    override fun onClick(view: View?) {
+        when (view) {
+            binding.btnBack -> {
+                findNavController().popBackStack()
+            }
         }
     }
 
