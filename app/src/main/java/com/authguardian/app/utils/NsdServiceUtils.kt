@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.utils
+package com.authguardian.app.utils
 
 import android.content.Context
 import android.net.nsd.NsdManager

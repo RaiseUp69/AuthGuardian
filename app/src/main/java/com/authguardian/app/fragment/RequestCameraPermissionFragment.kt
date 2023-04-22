@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.fragment
+package com.authguardian.app.fragment
 
 import android.Manifest.permission.CAMERA
 import android.content.pm.PackageManager
@@ -10,9 +10,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.authguardian.app.const.Extra.PERMISSION_DENIED_PERMANENTLY
+import com.authguardian.app.extension.NavigationUtils.navigate
 import com.authguardian.mobileapp.R
-import com.authguardian.mobileapp.const.Extra.PERMISSION_DENIED_PERMANENTLY
-import com.authguardian.mobileapp.extension.NavigationUtils.navigate
 
 class RequestCameraPermissionFragment : Fragment() {
 

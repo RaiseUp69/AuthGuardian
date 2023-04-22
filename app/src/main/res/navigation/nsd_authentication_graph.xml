@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nsdChooseRoleFragment"
-        android:name="com.authguardian.mobileapp.fragment.NsdChooseRoleFragment"
+        android:name="com.authguardian.app.fragment.NsdChooseRoleFragment"
         android:label="fragment_nsd_role_choose"
         tools:layout="@layout/fragment_nsd_choose_role">
 
@@ -30,12 +30,12 @@
 
     <fragment
         android:id="@+id/nsdClientFragment"
-        android:name="com.authguardian.mobileapp.fragment.NsdClientFragment"
+        android:name="com.authguardian.app.fragment.NsdClientFragment"
         android:label="fragment_nsd_client"
         tools:layout="@layout/fragment_nsd_client" />
     <fragment
         android:id="@+id/nsdServerFragment"
-        android:name="com.authguardian.mobileapp.fragment.NsdServerFragment"
+        android:name="com.authguardian.app.fragment.NsdServerFragment"
         android:label="fragment_nsd_server"
         tools:layout="@layout/fragment_nsd_server" />
 </navigation>

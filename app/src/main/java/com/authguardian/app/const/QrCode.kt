@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.const
+package com.authguardian.app.const
 
 object QrCode {
 
