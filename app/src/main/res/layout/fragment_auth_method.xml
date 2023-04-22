@@ -25,7 +25,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtChoosePairingMethod">
+        app:layout_constraintTop_toBottomOf="@+id/txtChoosePairingMethod"
+        app:layout_constraintVertical_bias="1.0">
 
         <Button
             android:id="@+id/btnNsd"
@@ -43,10 +44,10 @@
             style="@style/Widget.AuthGuardian.Button.Material"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/screen_vertical_margin"
+            android:layout_marginTop="8dp"
             android:text="@string/generate_qr_code"
-            app:layout_constraintEnd_toEndOf="parent"
             app:icon="@drawable/ic_qr_code"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnNsd" />
     </androidx.constraintlayout.widget.ConstraintLayout>

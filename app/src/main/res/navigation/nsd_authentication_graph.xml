@@ -3,11 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nsd_authentication_graph"
-    app:startDestination="@id/networkServiceDiscoverFragment">
+    app:startDestination="@id/nsdChooseRoleFragment">
 
     <fragment
-        android:id="@+id/networkServiceDiscoverFragment"
-        android:name="com.authguardian.mobileapp.fragment.NetworkServiceDiscoverFragment"
+        android:id="@+id/nsdChooseRoleFragment"
+        android:name="com.authguardian.mobileapp.fragment.NsdChooseRoleFragment"
         android:label="fragment_nsd_role_choose"
-        tools:layout="@layout/fragment_network_service_discover" />
+        tools:layout="@layout/fragment_nsd_choose_role">
+
+        <action
+            android:id="@+id/action_nsdChooseRoleFragment_to_nsdClientFragment"
+            app:destination="@id/nsdClientFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_nsdChooseRoleFragment_to_nsdServerFragment"
+            app:destination="@id/nsdServerFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nsdClientFragment"
+        android:name="com.authguardian.mobileapp.fragment.NsdClientFragment"
+        android:label="fragment_nsd_client"
+        tools:layout="@layout/fragment_nsd_client" />
+    <fragment
+        android:id="@+id/nsdServerFragment"
+        android:name="com.authguardian.mobileapp.fragment.NsdServerFragment"
+        android:label="fragment_nsd_server"
+        tools:layout="@layout/fragment_nsd_server" />
 </navigation>

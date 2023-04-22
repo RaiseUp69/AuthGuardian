@@ -25,6 +25,6 @@
     <string name="open_this_screen_in_another_device_in_same_wifi_network">Open this screen in another device in same WIFI network</string>
     <string name="server">Server</string>
     <string name="client">Client</string>
-    <string name="i_want_to_be_server">I want to be server!</string>
+    <string name="i_want_to_be_server">I want to be server</string>
     <string name="i_want_to_be_client">I want to be client</string>
 </resources>

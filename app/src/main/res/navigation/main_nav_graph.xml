@@ -10,6 +10,7 @@
         android:name="com.authguardian.mobileapp.fragment.AuthMethodFragment"
         android:label="fragment_auth_method"
         tools:layout="@layout/fragment_auth_method">
+
         <action
             android:id="@+id/action_authMethodFragment_to_qr_code_authentication_graph"
             app:destination="@id/qr_code_authentication_graph"
@@ -17,6 +18,7 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
         <action
             android:id="@+id/action_authMethodFragment_to_nsd_authentication_graph"
             app:destination="@id/nsd_authentication_graph"
