@@ -65,6 +65,12 @@ class QrCodeScannerFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.init()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

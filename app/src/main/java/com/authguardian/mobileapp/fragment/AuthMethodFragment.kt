@@ -34,13 +34,14 @@ class AuthMethodFragment : Fragment(), OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnQRCode.setOnClickListener(this@AuthMethodFragment)
+        viewModel.init()
+        binding.btnQrCode.setOnClickListener(this@AuthMethodFragment)
         binding.btnNsd.setOnClickListener(this@AuthMethodFragment)
     }
 
     override fun onClick(view: View?) {
         when (view) {
-            binding.btnQRCode -> {
+            binding.btnQrCode -> {
                 navigate(findNavController(), AuthMethodFragmentDirections.actionAuthMethodFragmentToQrCodeAuthenticationGraph())
             }
 

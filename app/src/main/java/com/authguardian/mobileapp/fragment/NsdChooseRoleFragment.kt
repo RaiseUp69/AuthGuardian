@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.databinding.FragmentNsdChooseRoleBinding
 import com.authguardian.mobileapp.extension.NavigationUtils.navigate
+import com.authguardian.mobileapp.viewmodel.NsdChooseRoleViewModel
 
 class NsdChooseRoleFragment : Fragment(), View.OnClickListener {
+
+    private val viewModel: NsdChooseRoleViewModel by viewModels()
 
     private var _binding: FragmentNsdChooseRoleBinding? = null
     private val binding get() = _binding!!
@@ -25,6 +29,7 @@ class NsdChooseRoleFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.init()
         binding.btnClient.setOnClickListener(this@NsdChooseRoleFragment)
         binding.btnServer.setOnClickListener(this@NsdChooseRoleFragment)
     }

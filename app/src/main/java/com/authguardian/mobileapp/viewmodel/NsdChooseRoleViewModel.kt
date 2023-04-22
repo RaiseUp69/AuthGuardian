@@ -4,8 +4,5 @@ import androidx.lifecycle.ViewModel
 
 class NsdChooseRoleViewModel : ViewModel() {
 
-    init {
-
-    }
-
+    fun init() {}
 }
