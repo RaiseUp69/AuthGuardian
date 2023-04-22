@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.fragment
+package com.authguardian.app.fragment
 
 import android.content.Context
 import android.net.nsd.NsdManager
@@ -10,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.authguardian.app.viewmodel.NsdClientViewModel
 import com.authguardian.mobileapp.databinding.FragmentNsdClientBinding
-import com.authguardian.mobileapp.viewmodel.NsdClientViewModel
 
 class NsdClientFragment : Fragment() {
 

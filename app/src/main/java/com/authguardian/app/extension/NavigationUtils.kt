@@ -1,4 +1,4 @@
-package com.authguardian.mobileapp.extension
+package com.authguardian.app.extension
 
 import android.os.Bundle
 import androidx.annotation.IdRes
