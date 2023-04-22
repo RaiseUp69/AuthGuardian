@@ -7,12 +7,7 @@
 
     <style name="Theme.AuthGuardian" parent="Base.Theme.AuthGuardian" />
 
-    <!-- contained button -->
-    <style name="Widget.AuthGuardian.Button" parent="Widget.Material3.Button">
-
-    </style>
-
-    <!-- region entrypoint -->
+    <style name="Widget.AuthGuardian.Button" parent="Widget.Material3.Button" />
 
     <style name="AuthGuardian.Button.ShapeAppearance" parent="Widget.AuthGuardian.Button">
         <item name="cornerFamily">rounded</item>
@@ -34,5 +29,4 @@
         <item name="shapeAppearanceOverlay">@style/AuthGuardian.Button.ShapeAppearance</item>
         <item name="android:textAppearance">@style/AuthGuardian.Button.TextAppearance</item>
     </style>
-    <!-- endregion -->
 </resources>
