@@ -3,7 +3,6 @@ package com.authguardian.mobileapp.fragment
 import android.content.Context
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.databinding.FragmentNsdServerBinding
 import com.authguardian.mobileapp.utils.NsdServiceUtils.Companion.SERVICE_TYPE
+import com.authguardian.mobileapp.utils.UniversalUtils
 import com.authguardian.mobileapp.viewmodel.NsdServerViewModel
 
 class NsdServerFragment : Fragment() {
@@ -36,9 +36,9 @@ class NsdServerFragment : Fragment() {
         _binding = FragmentNsdServerBinding.inflate(inflater, container, false)
 
         nsdManager = requireContext().getSystemService(Context.NSD_SERVICE) as NsdManager
-        val uniqueServiceName = "${Build.BRAND} ${Build.MODEL}"
+
         val serviceInfo = NsdServiceInfo().apply {
-            serviceName = uniqueServiceName
+            serviceName = UniversalUtils.getDeviceBrandAndModel()
             serviceType = SERVICE_TYPE
             port = 12345
         }

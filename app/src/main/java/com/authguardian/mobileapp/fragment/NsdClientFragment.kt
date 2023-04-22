@@ -10,8 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentNsdClientBinding
+import com.authguardian.mobileapp.utils.UniversalUtils.getDeviceBrandAndModel
 import com.authguardian.mobileapp.viewmodel.NsdClientViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class NsdClientFragment : Fragment() {
 
@@ -63,7 +66,11 @@ class NsdClientFragment : Fragment() {
 
             override fun onServiceFound(serviceInfo: NsdServiceInfo) {
                 Log.d("NSD", "Service found: ${serviceInfo.serviceName}")
-                nsdManager.resolveService(serviceInfo, resolveListener)
+                try {
+                    nsdManager.resolveService(serviceInfo, resolveListener)
+                } catch (e: Exception) {
+                    Snackbar.make(requireView(), e.localizedMessage ?: getString(R.string.something_went_wrong), Snackbar.LENGTH_SHORT).show()
+                }
             }
 
             override fun onServiceLost(serviceInfo: NsdServiceInfo) {
@@ -92,6 +99,11 @@ class NsdClientFragment : Fragment() {
 
             override fun onServiceResolved(serviceInfo: NsdServiceInfo) {
                 Log.d("NSD", "Service resolved: ${serviceInfo.serviceName}")
+
+                if (serviceInfo.serviceName == getDeviceBrandAndModel()) {
+                    Log.d("NSD", "Same machine: ${getDeviceBrandAndModel()}")
+                    return
+                }
 
                 viewModel.startClientSocket(serviceInfo.host, serviceInfo.port)
             }

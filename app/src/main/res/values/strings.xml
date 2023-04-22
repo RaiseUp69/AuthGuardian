@@ -27,4 +27,7 @@
     <string name="client">Client</string>
     <string name="i_want_to_be_server">I want to be server</string>
     <string name="i_want_to_be_client">I want to be client</string>
+    <string name="message_from_client">Here you will see a message from the client</string>
+    <string name="message_from_server">There will be a message from the server</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>
