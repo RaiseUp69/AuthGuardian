@@ -10,18 +10,13 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
-class QrCodeGenerationViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
-
-    private val job = SupervisorJob()
-
-    override val coroutineContext: CoroutineContext = Dispatchers.Main + job
+class QrCodeGenerationViewModel(application: Application) : AndroidViewModel(application) {
 
     private var ssid: String? = null
     private var password: String? = null
+    private var isInited: Boolean = false
 
     // region LiveData
 
@@ -32,18 +27,25 @@ class QrCodeGenerationViewModel(application: Application) : AndroidViewModel(app
     val isLoading: LiveData<Boolean> = _isLoading
     // endregion
 
-    fun init(ssid: String?, password: String?) {
-        this@QrCodeGenerationViewModel.ssid = ssid
-        this@QrCodeGenerationViewModel.password = password
 
-        if (ssid != null && password != null) {
-            getQrCodeBitmap()
+    fun init(ssid: String?, password: String?): Boolean = when {
+        isInited -> true
+        else -> {
+            this@QrCodeGenerationViewModel.ssid = ssid
+            this@QrCodeGenerationViewModel.password = password
+
+            if (ssid != null && password != null) {
+                generateQrCode()
+            }
+
+            isInited = true
+            true
         }
     }
 
-    private fun getQrCodeBitmap() {
-        _isLoading.postValue(true)
-        launch(Dispatchers.IO) {
+    private fun generateQrCode() {
+        CoroutineScope(Dispatchers.IO).launch {
+            _isLoading.postValue(true)
             val size = 512
             val qrCodeContent = "WIFI:S:$ssid;T:WPA;P:$password;;"
             val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size)
