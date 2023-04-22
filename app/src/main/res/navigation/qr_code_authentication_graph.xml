@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/qrCodeScannerFragment"
-        android:name="com.authguardian.app.fragment.QrCodeScannerFragment"
+        android:name="com.authguardian.mobileapp.fragment.QrCodeScannerFragment"
         android:label="fragment_qr_code_scanner"
         tools:layout="@layout/fragment_qr_code_scanner">
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/qrCodeGenerationFragment"
-        android:name="com.authguardian.app.fragment.QrCodeGenerationFragment"
+        android:name="com.authguardian.mobileapp.fragment.QrCodeGenerationFragment"
         android:label="fragment_qr_code_generation"
         tools:layout="@layout/fragment_qr_code_generation_fragment">
         <action
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/requestCameraPermissionFragment"
-        android:name="com.authguardian.app.fragment.RequestCameraPermissionFragment"
+        android:name="com.authguardian.mobileapp.fragment.RequestCameraPermissionFragment"
         android:label="fragment_request_camera_permission"
         tools:layout="@layout/fragment_request_camera_permission">
         <action
@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/authorizationFragment"
-        android:name="com.authguardian.app.fragment.AuthorizationFragment"
+        android:name="com.authguardian.mobileapp.fragment.AuthorizationFragment"
         android:label="fragment_authorization"
         tools:layout="@layout/fragment_authorization" />
 </navigation>

@@ -28,7 +28,7 @@
         android:theme="@style/Theme.AuthGuardian"
         tools:targetApi="33">
         <activity
-            android:name="com.authguardian.app.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

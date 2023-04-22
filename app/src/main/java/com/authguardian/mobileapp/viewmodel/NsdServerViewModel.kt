@@ -1,4 +1,4 @@
-package com.authguardian.app.viewmodel
+package com.authguardian.mobileapp.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -12,14 +12,14 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintWriter
-import java.net.InetAddress
-import java.net.Socket
+import java.net.ServerSocket
 
-class NsdClientViewModel : ViewModel() {
+class NsdServerViewModel : ViewModel() {
 
     // region Data
 
     private var isInited: Boolean = false
+    private var servicePort: Int? = null
     // endregion
 
     // region LiveData
@@ -28,38 +28,38 @@ class NsdClientViewModel : ViewModel() {
     val receivedMessage: LiveData<String> = _receivedMessage
     // endregion
 
-    fun init(): Boolean = when {
+    fun init(servicePort: Int): Boolean = when {
         isInited -> true
         else -> {
-
+            this.servicePort = servicePort
 
             isInited = true
             true
         }
     }
 
-    fun startClientSocket(serviceAddress: InetAddress, servicePort: Int) {
+    fun startServerSocket() {
         CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
                 try {
-                    val socket = Socket(serviceAddress, servicePort)
+                    val serverSocket = ServerSocket(servicePort!!)
+                    val socket = serverSocket.accept()
 
                     val input = BufferedReader(InputStreamReader(socket.getInputStream()))
                     val output = PrintWriter(socket.getOutputStream(), true)
 
-                    output.println("Hello from client!")
-
+                    output.println("Hello from server!")
                     val receivedData = input.readLine()
                     withContext(Dispatchers.Main) {
                         _receivedMessage.postValue(receivedData)
                     }
-                    Log.d("NSD", "Received data from server: $receivedData")
+                    Log.d("NSD", "Received data from client: $receivedData")
 
                     socket.close()
+                    serverSocket.close()
                 } catch (e: IOException) {
-                    Log.e("NSD", "Client socket error: ", e)
+                    Log.e("NSD", "Server socket error: ", e)
                 }
-
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.authguardian.app.activity
+package com.authguardian.mobileapp.activity
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navController = (supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment).navController
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
 
         setSupportActionBar(findViewById(R.id.toolbar))

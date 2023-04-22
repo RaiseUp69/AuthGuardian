@@ -1,4 +1,4 @@
-package com.authguardian.app.fragment
+package com.authguardian.mobileapp.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.authguardian.app.extension.NavigationUtils.navigate
 import com.authguardian.mobileapp.databinding.FragmentNsdChooseRoleBinding
+import com.authguardian.mobileapp.extension.NavigationUtils.navigate
 
 class NsdChooseRoleFragment : Fragment(), View.OnClickListener {
 

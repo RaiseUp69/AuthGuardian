@@ -1,4 +1,4 @@
-package com.authguardian.app.fragment
+package com.authguardian.mobileapp.fragment
 
 import android.Manifest.permission.CAMERA
 import android.annotation.SuppressLint
@@ -16,10 +16,11 @@ import androidx.core.util.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.authguardian.app.extension.NavigationUtils.navigate
-import com.authguardian.app.viewmodel.QrCodeScannerViewModel
-import com.authguardian.app.viewmodel.QrCodeScannerViewModel.Companion.TAG
+import com.authguardian.mobileapp.const.QrCode
 import com.authguardian.mobileapp.databinding.FragmentQrCodeScannerBinding
+import com.authguardian.mobileapp.extension.NavigationUtils.navigate
+import com.authguardian.mobileapp.viewmodel.QrCodeScannerViewModel
+import com.authguardian.mobileapp.viewmodel.QrCodeScannerViewModel.Companion.TAG
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.vision.CameraSource
@@ -82,7 +83,7 @@ class QrCodeScannerFragment : Fragment() {
                     val qr = detectedItems.valueAt(0)
                     qr.wifi.let {
                         Log.d(TAG, "SSID: ${it.ssid}, Password: ${it.password}")
-                        if (it.ssid == com.authguardian.app.const.QrCode.USER_SSID && it.password == com.authguardian.app.const.QrCode.USER_PASSWORD) {
+                        if (it.ssid == QrCode.USER_SSID && it.password == QrCode.USER_PASSWORD) {
                             navigate(findNavController(), QrCodeScannerFragmentDirections.actionQrCodeScannerFragmentToAuthorizationFragment())
                         }
                     }
