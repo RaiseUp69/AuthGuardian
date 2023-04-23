@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">AuthGuardian</string>
+    <string name="app_name" translatable="false">AuthGuard</string>
     <string name="btn_push_me">Button</string>
     <string name="main_fragment_hello">Hello</string>
     <string name="login">Login</string>
@@ -13,7 +13,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="choose_auth_method">Authentication method</string>
+    <string name="select_authentication_method">Select the <b>authentication method</b></string>
     <string name="network_service_discovery">Network service discovery</string>
     <string name="back">Back</string>
     <string name="generate_qr_code">QR code</string>
@@ -32,4 +32,5 @@
     <string name="message_from_client">Here you will see a message from the client</string>
     <string name="message_from_server">There will be a message from the server</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="powered_by_bohdan_oliinyk">Powered by Bohdan Oliinyk</string>
 </resources>
