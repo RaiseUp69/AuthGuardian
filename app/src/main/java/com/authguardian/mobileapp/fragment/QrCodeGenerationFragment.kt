@@ -88,6 +88,7 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
     private fun updateUiForPermissionGranted() {
         with(binding) {
             txtPermissionRejectedMessage.isVisible = false
+            imgArrowGuide.isVisible = false
             qrCodeLayout.alpha = 1F
             btnScanQrCode.text = getString(R.string.i_want_scan)
         }
@@ -129,6 +130,7 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
     private fun handlePermissionDenied(isPermissionDeniedPermanently: Boolean) {
         with(binding) {
             txtPermissionRejectedMessage.isVisible = true
+            imgArrowGuide.isVisible = true
             txtPermissionRejectedMessage.text = getString(
                 if (isPermissionDeniedPermanently)
                     R.string.camera_permission_rejected_second_time

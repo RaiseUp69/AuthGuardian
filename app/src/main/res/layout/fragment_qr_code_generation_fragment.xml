@@ -41,15 +41,30 @@
 
     <TextView
         android:id="@+id/txtPermissionRejectedMessage"
-        style="@style/MaterialAlertDialog.Material3.Body.Text"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/camera_permission_rejected_first_time"
+        android:textAlignment="center"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/qrCodeLayout"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imgArrowGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/go_to_settings"
+        android:src="@drawable/ic_bottom_arrow"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnScanQrCode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPermissionRejectedMessage"
+        app:layout_constraintVertical_bias="1.0"
         tools:visibility="visible" />
 
     <Button
