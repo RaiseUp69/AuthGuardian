@@ -7,17 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".fragment.AuthMethodFragment">
 
+    <ImageView
+        android:id="@+id/imgAppIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/txtChoosePairingMethod"
         style="@style/TextAppearance.MaterialComponents.Headline4"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/screen_horizontal_margin"
         android:text="@string/choose_auth_method"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imgAppIcon" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
