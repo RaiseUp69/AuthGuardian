@@ -18,7 +18,7 @@ import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.const.Extra
 import com.authguardian.mobileapp.const.QrCode.USER_PASSWORD
 import com.authguardian.mobileapp.const.QrCode.USER_SSID
-import com.authguardian.mobileapp.databinding.FragmentQrCodeGenerationFragmentBinding
+import com.authguardian.mobileapp.databinding.FragmentQrCodeGenerationBinding
 import com.authguardian.mobileapp.extension.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.QrCodeGenerationViewModel
 
@@ -26,7 +26,7 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
 
     private val viewModel: QrCodeGenerationViewModel by viewModels()
 
-    private var _binding: FragmentQrCodeGenerationFragmentBinding? = null
+    private var _binding: FragmentQrCodeGenerationBinding? = null
     private val binding get() = _binding!!
 
     private var needToGoSettings: Boolean = false
@@ -35,7 +35,7 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentQrCodeGenerationFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentQrCodeGenerationBinding.inflate(inflater, container, false)
         return binding.root
     }
 

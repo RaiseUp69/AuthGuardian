@@ -23,7 +23,7 @@
         android:id="@+id/qrCodeGenerationFragment"
         android:name="com.authguardian.mobileapp.fragment.QrCodeGenerationFragment"
         android:label="fragment_qr_code_generation"
-        tools:layout="@layout/fragment_qr_code_generation_fragment">
+        tools:layout="@layout/fragment_qr_code_generation">
         <action
             android:id="@+id/action_qrCodeGenerationFragment_to_requestCameraPermissionFragment"
             app:destination="@id/requestCameraPermissionFragment"
