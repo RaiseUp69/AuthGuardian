@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.const.Extra
@@ -20,11 +22,21 @@ import com.authguardian.mobileapp.const.QrCode.USER_PASSWORD
 import com.authguardian.mobileapp.const.QrCode.USER_SSID
 import com.authguardian.mobileapp.databinding.FragmentQrCodeGenerationBinding
 import com.authguardian.mobileapp.extension.NavigationUtils.navigate
+import com.authguardian.mobileapp.provider.DataStoreRepositoryProvider
 import com.authguardian.mobileapp.viewmodel.QrCodeGenerationViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
 
-    private val viewModel: QrCodeGenerationViewModel by viewModels()
+    @Suppress("UNCHECKED_CAST")
+    private val viewModel: QrCodeGenerationViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = QrCodeGenerationViewModel(
+                requireActivity().application,
+                DataStoreRepositoryProvider.instance.getInstance(requireContext())
+            ) as T
+        }
+    }
 
     private var _binding: FragmentQrCodeGenerationBinding? = null
     private val binding get() = _binding!!
@@ -59,6 +71,7 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view) {
             binding.btnScanQrCode -> handleBtnScanQrCodeClick()
+            binding.btnSaveQrCode -> viewModel.saveUserData()
         }
     }
 
@@ -69,14 +82,21 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
 
         viewModel.qrCode.observe(viewLifecycleOwner) { qrCode ->
             binding.imgQrCode.setImageBitmap(qrCode)
+            binding.btnSaveQrCode.isVisible = true
         }
+
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.spinner.isVisible = isLoading
+        }
+
+        viewModel.savedMessage.observe(viewLifecycleOwner) { message ->
+            Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
         }
     }
 
     private fun initViews() {
         binding.btnScanQrCode.setOnClickListener(this)
+        binding.btnSaveQrCode.setOnClickListener(this)
     }
 
     private fun handleResume() {
