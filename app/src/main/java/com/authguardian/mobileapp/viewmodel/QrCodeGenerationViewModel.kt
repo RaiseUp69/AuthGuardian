@@ -10,6 +10,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class QrCodeGenerationViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,7 +27,6 @@ class QrCodeGenerationViewModel(application: Application) : AndroidViewModel(app
     private var _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean> = _isLoading
     // endregion
-
 
     fun init(ssid: String?, password: String?): Boolean = when {
         isInited -> true
@@ -46,6 +46,7 @@ class QrCodeGenerationViewModel(application: Application) : AndroidViewModel(app
     private fun generateQrCode() {
         CoroutineScope(Dispatchers.IO).launch {
             _isLoading.postValue(true)
+            delay(2000) // only for demonstration
             val size = 512
             val qrCodeContent = "WIFI:S:$ssid;T:WPA;P:$password;;"
             val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size)
