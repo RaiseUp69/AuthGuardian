@@ -33,4 +33,7 @@
     <string name="message_from_server">There will be a message from the server</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="powered_by_bohdan_oliinyk">Powered by Bohdan Oliinyk</string>
+    <string name="save_this_qr_code"><u>Save this QR code</u></string>
+    <string name="clear_saved_qr_code"><u>Clear saved QR code</u></string>
+    <string name="qr_code_saved">QR code was successfully saved!</string>
 </resources>
