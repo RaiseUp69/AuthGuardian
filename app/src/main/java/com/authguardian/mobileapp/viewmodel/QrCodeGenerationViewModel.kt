@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.R
-import com.authguardian.mobileapp.implementation.DataStoreRepositoryImpl
+import com.authguardian.mobileapp.repository.DataStoreRepository
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class QrCodeGenerationViewModel(
     application: Application,
-    private val dataStore: DataStoreRepositoryImpl
+    private val dataStoreRepository: DataStoreRepository
 ) : AndroidViewModel(application) {
 
     private var ssid: String? = null
@@ -57,7 +57,7 @@ class QrCodeGenerationViewModel(
             _isLoading.postValue(true)
             delay(1000) // only for demonstration
             val size = 512
-            val qrCodeContent = "WIFI:S:${dataStore.getString(USER_SSID) ?: ssid};T:WPA;P:${dataStore.getString(USER_PASSWORD) ?: password};;"
+            val qrCodeContent = "WIFI:S:${dataStoreRepository.getString(USER_SSID) ?: ssid};T:WPA;P:${dataStoreRepository.getString(USER_PASSWORD) ?: password};;"
             val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size)
             _qrCode.postValue(Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
                 for (x in 0 until size) {
@@ -73,8 +73,8 @@ class QrCodeGenerationViewModel(
     fun saveUserData() {
         // TODO: Add the ability to clean up qr code from datastore
         viewModelScope.launch {
-            if (dataStore.getString(USER_SSID) == null && dataStore.getString(USER_PASSWORD) == null) {
-                dataStore.apply {
+            if (dataStoreRepository.getString(USER_SSID) == null && dataStoreRepository.getString(USER_PASSWORD) == null) {
+                dataStoreRepository.apply {
                     putString(USER_SSID, ssid!!)
                     putString(USER_PASSWORD, password!!)
                 }
