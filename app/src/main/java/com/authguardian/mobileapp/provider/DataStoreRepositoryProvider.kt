@@ -1,17 +1,17 @@
 package com.authguardian.mobileapp.provider
 
 import android.content.Context
-import com.authguardian.mobileapp.implementation.DataStoreRepositoryImpl
+import com.authguardian.mobileapp.repository.DataStoreRepository
 
 class DataStoreRepositoryProvider private constructor() {
 
-    private lateinit var dataStoreRepositoryImpl: DataStoreRepositoryImpl
+    private lateinit var dataStoreRepository: DataStoreRepository
 
-    fun getInstance(context: Context): DataStoreRepositoryImpl {
-        if (!::dataStoreRepositoryImpl.isInitialized) {
-            dataStoreRepositoryImpl = DataStoreRepositoryImpl(context.applicationContext)
+    fun getInstance(context: Context): DataStoreRepository {
+        if (!::dataStoreRepository.isInitialized) {
+            dataStoreRepository = DataStoreRepository(context.applicationContext)
         }
-        return dataStoreRepositoryImpl
+        return dataStoreRepository
     }
 
     companion object {
