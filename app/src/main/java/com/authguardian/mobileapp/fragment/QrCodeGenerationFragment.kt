@@ -41,7 +41,7 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentQrCodeGenerationBinding? = null
     private val binding get() = _binding!!
 
-    private var needToGoSettings: Boolean = false
+    private var isCameraPermissionDeniedPermanently: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,8 +53,26 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
-        initViews()
+
+        if (!viewModel.init(ssid = USER_SSID, password = USER_PASSWORD)) {
+            findNavController().popBackStack()
+        }
+
+        viewModel.qrCode.observe(viewLifecycleOwner) { qrCode ->
+            binding.imgQrCode.setImageBitmap(qrCode)
+            binding.btnSaveQrCode.isVisible = true
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.spinner.isVisible = isLoading
+        }
+
+        viewModel.savedMessage.observe(viewLifecycleOwner) { message ->
+            Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
+        }
+
+        binding.btnScanQrCode.setOnClickListener(this)
+        binding.btnSaveQrCode.setOnClickListener(this)
         checkCameraPermission()
     }
 
@@ -75,48 +93,24 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun initViewModel() {
-        if (!viewModel.init(ssid = USER_SSID, password = USER_PASSWORD)) {
-            findNavController().popBackStack()
-        }
-
-        viewModel.qrCode.observe(viewLifecycleOwner) { qrCode ->
-            binding.imgQrCode.setImageBitmap(qrCode)
-            binding.btnSaveQrCode.isVisible = true
-        }
-
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.spinner.isVisible = isLoading
-        }
-
-        viewModel.savedMessage.observe(viewLifecycleOwner) { message ->
-            Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun initViews() {
-        binding.btnScanQrCode.setOnClickListener(this)
-        binding.btnSaveQrCode.setOnClickListener(this)
-    }
-
     private fun handleResume() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            updateUiForPermissionGranted()
+            updateUIForPermissionGranted()
         }
     }
 
-    private fun updateUiForPermissionGranted() {
+    private fun updateUIForPermissionGranted() {
         with(binding) {
             txtPermissionRejectedMessage.isVisible = false
             imgArrowGuide.isVisible = false
             qrCodeLayout.alpha = 1F
             btnScanQrCode.text = getString(R.string.i_want_scan)
         }
-        needToGoSettings = false
+        isCameraPermissionDeniedPermanently = false
     }
 
     private fun handleBtnScanQrCodeClick() {
-        if (needToGoSettings) {
+        if (isCameraPermissionDeniedPermanently) {
             goToSettings()
         } else {
             navigateToRequestCameraPermission()
@@ -158,7 +152,7 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
                     R.string.camera_permission_rejected_first_time
             )
             qrCodeLayout.alpha = 0.1F
-            needToGoSettings = isPermissionDeniedPermanently
+            isCameraPermissionDeniedPermanently = isPermissionDeniedPermanently
             btnScanQrCode.text = getString(
                 if (isPermissionDeniedPermanently)
                     R.string.go_to_settings
