@@ -21,10 +21,6 @@ class QrCodeGenerationViewModel(
     private val dataStoreRepository: DataStoreRepository
 ) : AndroidViewModel(application) {
 
-    private var ssid: String? = null
-    private var password: String? = null
-    private var isInited: Boolean = false
-
     // region LiveData
 
     private var _qrCode: MutableLiveData<Bitmap> = MutableLiveData()
@@ -35,6 +31,13 @@ class QrCodeGenerationViewModel(
 
     private var _savedMessage: MutableLiveData<String> = MutableLiveData()
     val savedMessage: LiveData<String> = _savedMessage
+    // endregion
+
+    // region Data
+
+    private var ssid: String? = null
+    private var password: String? = null
+    private var isInited: Boolean = false
     // endregion
 
     fun init(ssid: String?, password: String?): Boolean = when {
