@@ -86,9 +86,9 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion")
 
-    implementation("androidx.core:core-ktx:1.10.0")
+    implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.8.0")
+    implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:$junitVersion")
 
@@ -97,4 +97,7 @@ dependencies {
 
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Mockk
+    testImplementation("io.mockk:mockk:${mockkVersion}")
 }
