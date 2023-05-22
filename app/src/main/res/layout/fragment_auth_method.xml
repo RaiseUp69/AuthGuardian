@@ -20,20 +20,21 @@
 
     <ImageView
         android:id="@+id/imgAppIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="228dp"
+        android:layout_marginTop="@dimen/screen_vertical_margin"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/img_shield"
+        android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPoweredBy" />
 
     <TextView
+        android:id="@+id/textView"
         style="@style/TextAppearance.MaterialComponents.Headline3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/screen_vertical_margin"
         android:text="@string/app_name"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,13 +46,12 @@
         style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/select_authentication_method"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgAppIcon"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="1"
         app:layout_constraintVertical_chainStyle="packed" />
 
@@ -87,5 +87,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnNsd" />
+
+        <Button
+            android:id="@+id/btnSocialLogin"
+            style="@style/Widget.AuthGuardian.Button.Material"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/social_login"
+            app:icon="@drawable/ic_social_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnQrCode" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

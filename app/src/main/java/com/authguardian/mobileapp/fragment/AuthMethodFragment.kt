@@ -37,16 +37,30 @@ class AuthMethodFragment : Fragment(), OnClickListener {
         viewModel.init()
         binding.btnQrCode.setOnClickListener(this@AuthMethodFragment)
         binding.btnNsd.setOnClickListener(this@AuthMethodFragment)
+        binding.btnSocialLogin.setOnClickListener(this@AuthMethodFragment)
     }
 
     override fun onClick(view: View?) {
         when (view) {
             binding.btnQrCode -> {
-                navigate(findNavController(), AuthMethodFragmentDirections.actionAuthMethodFragmentToQrCodeAuthenticationGraph())
+                navigate(
+                    findNavController(),
+                    AuthMethodFragmentDirections.actionAuthMethodFragmentToQrCodeAuthenticationGraph()
+                )
             }
 
             binding.btnNsd -> {
-                navigate(findNavController(), AuthMethodFragmentDirections.actionAuthMethodFragmentToNsdAuthenticationGraph())
+                navigate(
+                    findNavController(),
+                    AuthMethodFragmentDirections.actionAuthMethodFragmentToNsdAuthenticationGraph()
+                )
+            }
+
+            binding.btnSocialLogin -> {
+                navigate(
+                    findNavController(),
+                    AuthMethodFragmentDirections.actionAuthMethodFragmentToSocialLoginGraph()
+                )
             }
         }
     }
