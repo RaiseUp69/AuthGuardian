@@ -4,7 +4,5 @@ import androidx.lifecycle.ViewModel
 
 class AuthMethodViewModel : ViewModel() {
 
-    fun init() {
-
-    }
+    fun init() {}
 }

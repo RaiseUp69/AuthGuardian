@@ -75,6 +75,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$rootProject.kotlinCoroutinesVersion")
     implementation 'androidx.annotation:annotation:1.6.0'
     implementation 'com.google.firebase:firebase-auth:21.1.0'
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.kotlinCoroutinesVersion")
 
     implementation 'com.google.android.gms:play-services-vision:20.1.3'

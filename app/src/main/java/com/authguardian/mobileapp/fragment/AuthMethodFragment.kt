@@ -35,9 +35,11 @@ class AuthMethodFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.init()
-        binding.btnQrCode.setOnClickListener(this@AuthMethodFragment)
-        binding.btnNsd.setOnClickListener(this@AuthMethodFragment)
-        binding.btnSocialLogin.setOnClickListener(this@AuthMethodFragment)
+        with(binding) {
+            btnQrCode.setOnClickListener(this@AuthMethodFragment)
+            btnNsd.setOnClickListener(this@AuthMethodFragment)
+            btnSocialLogin.setOnClickListener(this@AuthMethodFragment)
+        }
     }
 
     override fun onClick(view: View?) {
