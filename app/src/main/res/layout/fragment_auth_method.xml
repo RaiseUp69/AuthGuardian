@@ -93,6 +93,7 @@
             style="@style/Widget.AuthGuardian.Button.Material"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="@string/social_login"
             app:icon="@drawable/ic_social_login"
             app:layout_constraintEnd_toEndOf="parent"
