@@ -37,4 +37,5 @@
     <string name="clear_saved_qr_code"><u>Clear saved QR code</u></string>
     <string name="qr_code_saved">QR code was successfully saved!</string>
     <string name="social_login">Social login</string>
+    <string name="sign_out">Sign out</string>
 </resources>

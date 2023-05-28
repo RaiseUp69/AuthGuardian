@@ -9,5 +9,18 @@
         android:id="@+id/socialLoginFragment"
         android:name="com.authguardian.mobileapp.fragment.SocialLoginFragment"
         android:label="fragment_social_login"
-        tools:layout="@layout/fragment_social_login" />
+        tools:layout="@layout/fragment_social_login">
+        <action
+            android:id="@+id/action_socialLoginFragment_to_googleSignSuccessfulFragment"
+            app:destination="@id/googleSignSuccessfulFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/googleSignSuccessfulFragment"
+        android:name="com.authguardian.mobileapp.fragment.GoogleSignSuccessfulFragment"
+        android:label="fragment_google_sign_successful"
+        tools:layout="@layout/fragment_google_sign_successful" />
 </navigation>
