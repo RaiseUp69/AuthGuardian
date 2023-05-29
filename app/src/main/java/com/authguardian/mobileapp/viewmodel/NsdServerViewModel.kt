@@ -54,8 +54,6 @@ class NsdServerViewModel : ViewModel() {
                     withContext(Dispatchers.Main) {
                         _receivedMessage.postValue(receivedData)
                     }
-                    Log.d("NSD", "Received data from client: $receivedData")
-
                     socket.close()
                     serverSocket.close()
                 } catch (e: IOException) {

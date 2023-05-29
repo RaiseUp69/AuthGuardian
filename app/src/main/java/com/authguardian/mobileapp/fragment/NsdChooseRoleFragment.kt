@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentNsdChooseRoleBinding
 import com.authguardian.mobileapp.extension.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.NsdChooseRoleViewModel
@@ -35,12 +36,12 @@ class NsdChooseRoleFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        when (view) {
-            binding.btnClient -> {
+        when (view?.id) {
+            R.id.btnClient -> {
                 navigate(findNavController(), NsdChooseRoleFragmentDirections.actionNsdChooseRoleFragmentToNsdClientFragment())
             }
 
-            binding.btnServer -> {
+            R.id.btnServer -> {
                 navigate(findNavController(), NsdChooseRoleFragmentDirections.actionNsdChooseRoleFragmentToNsdServerFragment())
             }
         }
