@@ -62,8 +62,8 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        when (view) {
-            binding.btnBack -> {
+        when (view?.id) {
+            R.id.btnBack -> {
                 findNavController().popBackStack()
             }
         }

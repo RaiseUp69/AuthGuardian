@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentNsdServerBinding
-import com.authguardian.mobileapp.utils.NsdServiceUtils.Companion.SERVICE_TYPE
 import com.authguardian.mobileapp.utils.UniversalUtils
 import com.authguardian.mobileapp.viewmodel.NsdServerViewModel
 
@@ -23,7 +23,7 @@ class NsdServerFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentNsdServerBinding? = null
     private val binding get() = _binding!!
 
-    // region nsd
+    // region data
 
     private lateinit var nsdManager: NsdManager
     private lateinit var registrationListener: NsdManager.RegistrationListener
@@ -42,8 +42,8 @@ class NsdServerFragment : Fragment(), View.OnClickListener {
             serviceType = SERVICE_TYPE
             port = 12345
         }
-        setupListeners()
-        nsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
+
+        setupRegistrationListener(serviceInfo)
 
         if (!viewModel.init(serviceInfo.port)) {
             findNavController().popBackStack()
@@ -64,14 +64,14 @@ class NsdServerFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        when (view) {
-            binding.btnBack -> {
+        when (view?.id) {
+            R.id.btnBack -> {
                 findNavController().popBackStack()
             }
         }
     }
 
-    private fun setupListeners() {
+    private fun setupRegistrationListener(serviceInfo: NsdServiceInfo) {
         registrationListener = object : NsdManager.RegistrationListener {
             override fun onServiceRegistered(serviceInfo: NsdServiceInfo) {
                 Log.d("NSD", "Service registered: ${serviceInfo.serviceName}")
@@ -89,5 +89,13 @@ class NsdServerFragment : Fragment(), View.OnClickListener {
                 Log.e("NSD", "Unregistration failed with error code: $errorCode")
             }
         }
+
+        nsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
+    }
+
+    companion object {
+
+        const val SERVICE_TYPE = "_http._tcp."
+        private val TAG = NsdServerFragment::class.java.simpleName
     }
 }
