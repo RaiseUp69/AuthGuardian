@@ -26,7 +26,7 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
 
     // region nsd
 
-    private lateinit var nsdManager: NsdManager
+    private var nsdManager: NsdManager? = null
     private var discoveryListener: NsdManager.DiscoveryListener? = null
     private var resolveListener: NsdManager.ResolveListener? = null
     // endregion
@@ -39,14 +39,18 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
 
         nsdManager = requireContext().getSystemService(Context.NSD_SERVICE) as NsdManager
         setupListeners()
-        nsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener)
+        nsdManager!!.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener)
 
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        nsdManager.stopServiceDiscovery(discoveryListener)
+        nsdManager?.let { nsdManager ->
+            nsdManager.stopServiceDiscovery(discoveryListener)
+            discoveryListener = null
+            resolveListener = null
+        }
         _binding = null
     }
 
@@ -78,7 +82,22 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
             override fun onServiceFound(serviceInfo: NsdServiceInfo) {
                 Log.d("NSD", "Service found: ${serviceInfo.serviceName}")
                 try {
-                    nsdManager.resolveService(serviceInfo, resolveListener)
+                    resolveListener = object : NsdManager.ResolveListener {
+                        override fun onResolveFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
+                            Log.e("NSD", "Resolve failed with error code: $errorCode")
+                        }
+
+                        override fun onServiceResolved(serviceInfo: NsdServiceInfo) {
+                            Log.d("NSD", "Service resolved: ${serviceInfo.serviceName}")
+                            if (serviceInfo.serviceName == getDeviceBrandAndModel()) {
+                                Log.d("NSD", "Same machine: ${getDeviceBrandAndModel()}")
+                                return
+                            }
+                            viewModel.startClientSocket(serviceInfo.host, serviceInfo.port)
+                        }
+                    }
+
+                    nsdManager?.resolveService(serviceInfo, resolveListener)
                 } catch (e: Exception) {
                     Snackbar.make(requireView(), e.localizedMessage ?: getString(R.string.something_went_wrong), Snackbar.LENGTH_SHORT).show()
                 }
@@ -94,12 +113,12 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
 
             override fun onStartDiscoveryFailed(serviceType: String, errorCode: Int) {
                 Log.e("NSD", "Discovery failed: Error code: $errorCode")
-                nsdManager.stopServiceDiscovery(this)
+                nsdManager?.stopServiceDiscovery(this)
             }
 
             override fun onStopDiscoveryFailed(serviceType: String, errorCode: Int) {
                 Log.e("NSD", "Discovery failed: Error code: $errorCode")
-                nsdManager.stopServiceDiscovery(this)
+                nsdManager?.stopServiceDiscovery(this)
             }
         }
 

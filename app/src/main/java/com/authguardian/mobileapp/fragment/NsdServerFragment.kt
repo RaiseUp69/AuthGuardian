@@ -19,14 +19,13 @@ import com.authguardian.mobileapp.viewmodel.NsdServerViewModel
 class NsdServerFragment : Fragment(), View.OnClickListener {
 
     private val viewModel: NsdServerViewModel by viewModels()
-
     private var _binding: FragmentNsdServerBinding? = null
     private val binding get() = _binding!!
 
     // region data
 
-    private lateinit var nsdManager: NsdManager
-    private lateinit var registrationListener: NsdManager.RegistrationListener
+    private var nsdManager: NsdManager? = null
+    private var registrationListener: NsdManager.RegistrationListener? = null
     // endregion
 
     override fun onCreateView(
@@ -55,11 +54,9 @@ class NsdServerFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel.receivedMessage.observe(viewLifecycleOwner) { message ->
             binding.txtMessage.text = message
         }
-
         binding.btnBack.setOnClickListener(this@NsdServerFragment)
     }
 
@@ -71,26 +68,35 @@ class NsdServerFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        nsdManager?.unregisterService(registrationListener)
+        registrationListener = null
+        nsdManager = null
+    }
+
     private fun setupRegistrationListener(serviceInfo: NsdServiceInfo) {
         registrationListener = object : NsdManager.RegistrationListener {
             override fun onServiceRegistered(serviceInfo: NsdServiceInfo) {
-                Log.d("NSD", "Service registered: ${serviceInfo.serviceName}")
+                Log.d(TAG, "Service registered: ${serviceInfo.serviceName}")
             }
 
             override fun onRegistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
-                Log.e("NSD", "Registration failed with error code: $errorCode")
+                Log.e(TAG, "Registration failed with error code: $errorCode")
+                // Handle registration failure
             }
 
             override fun onServiceUnregistered(serviceInfo: NsdServiceInfo) {
-                Log.d("NSD", "Service unregistered: ${serviceInfo.serviceName}")
+                Log.d(TAG, "Service unregistered: ${serviceInfo.serviceName}")
             }
 
             override fun onUnregistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
-                Log.e("NSD", "Unregistration failed with error code: $errorCode")
+                Log.e(TAG, "Unregistration failed with error code: $errorCode")
+                // Handle unregistration failure
             }
         }
 
-        nsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
+        nsdManager?.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
     }
 
     companion object {
