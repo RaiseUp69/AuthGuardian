@@ -62,6 +62,10 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
             binding.txtMessage.text = message
         }
 
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
         binding.btnBack.setOnClickListener(this@NsdClientFragment)
     }
 
