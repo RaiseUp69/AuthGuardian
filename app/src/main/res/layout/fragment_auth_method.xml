@@ -20,11 +20,13 @@
 
     <ImageView
         android:id="@+id/imgAppIcon"
-        android:layout_width="0dp"
-        android:layout_height="228dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/screen_vertical_margin"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@drawable/img_shield"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPoweredBy" />
@@ -34,7 +36,6 @@
         style="@style/TextAppearance.MaterialComponents.Headline3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/screen_vertical_margin"
         android:text="@string/app_name"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,13 +47,14 @@
         style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/screen_horizontal_margin_small"
         android:text="@string/select_authentication_method"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="1.0"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,7 +65,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtChoosePairingMethod">
+        app:layout_constraintTop_toBottomOf="@+id/txtChoosePairingMethod"
+        app:layout_constraintVertical_bias="1.0">
 
         <Button
             android:id="@+id/btnNsd"
