@@ -31,8 +31,6 @@ class NsdClientViewModel : ViewModel() {
     fun init(): Boolean = when {
         isInited -> true
         else -> {
-
-
             isInited = true
             true
         }
