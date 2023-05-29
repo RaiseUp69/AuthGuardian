@@ -83,30 +83,22 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        handleResume()
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            with(binding) {
+                txtPermissionRejectedMessage.isVisible = false
+                imgArrowGuide.isVisible = false
+                qrCodeLayout.alpha = 1F
+                btnScanQrCode.text = getString(R.string.i_want_scan)
+            }
+            isCameraPermissionDeniedPermanently = false
+        }
     }
 
     override fun onClick(view: View?) {
-        when (view) {
-            binding.btnScanQrCode -> handleBtnScanQrCodeClick()
-            binding.btnSaveQrCode -> viewModel.saveUserData()
+        when (view?.id) {
+            R.id.btnScanQrCode -> handleBtnScanQrCodeClick()
+            R.id.btnSaveQrCode -> viewModel.saveUserData()
         }
-    }
-
-    private fun handleResume() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            updateUIForPermissionGranted()
-        }
-    }
-
-    private fun updateUIForPermissionGranted() {
-        with(binding) {
-            txtPermissionRejectedMessage.isVisible = false
-            imgArrowGuide.isVisible = false
-            qrCodeLayout.alpha = 1F
-            btnScanQrCode.text = getString(R.string.i_want_scan)
-        }
-        isCameraPermissionDeniedPermanently = false
     }
 
     private fun handleBtnScanQrCodeClick() {
