@@ -5,13 +5,12 @@
     style="@style/Container.ScreenContentWithDefaultPadding"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".fragment.NsdClientFragment">
 
     <TextView
         android:id="@+id/txtClientInstruction"
         style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/nsd_client_instruction"
@@ -20,15 +19,42 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtMessage"
-        style="@style/TextAppearance.AppCompat.Body1"
+        android:id="@+id/txtMessageDescription"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:text="@string/message_from_server"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtClientInstruction"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintVertical_bias="0.3" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/screen_horizontal_margin_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtMessageDescription">
+
+        <TextView
+            android:id="@+id/txtMessage"
+            style="@style/TextAppearance.AppCompat.Display1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            tools:text="@tools:sample/lorem" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <Button
         android:id="@+id/btnBack"

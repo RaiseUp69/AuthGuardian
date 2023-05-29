@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
@@ -26,6 +27,9 @@ class NsdClientViewModel : ViewModel() {
 
     private val _receivedMessage: MutableLiveData<String> = MutableLiveData()
     val receivedMessage: LiveData<String> = _receivedMessage
+
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val isLoading: LiveData<Boolean> = _isLoading
     // endregion
 
     fun init(): Boolean = when {
@@ -37,8 +41,10 @@ class NsdClientViewModel : ViewModel() {
     }
 
     fun startClientSocket(serviceAddress: InetAddress, servicePort: Int) {
+        _isLoading.postValue(true)
         CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
+                delay(1000) // only for testing
                 try {
                     val socket = Socket(serviceAddress, servicePort)
 
@@ -50,14 +56,17 @@ class NsdClientViewModel : ViewModel() {
                     val receivedData = input.readLine()
                     withContext(Dispatchers.Main) {
                         _receivedMessage.postValue(receivedData)
+                        _isLoading.postValue(false)
                     }
                     Log.d("NSD", "Received data from server: $receivedData")
 
                     socket.close()
                 } catch (e: IOException) {
+                    withContext(Dispatchers.Main) {
+                        _isLoading.postValue(false)
+                    }
                     Log.e("NSD", "Client socket error: ", e)
                 }
-
             }
         }
     }
