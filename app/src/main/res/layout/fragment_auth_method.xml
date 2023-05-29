@@ -21,18 +21,18 @@
     <ImageView
         android:id="@+id/imgAppIcon"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/screen_vertical_margin"
         android:contentDescription="@string/app_name"
         android:src="@drawable/img_shield"
         app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/txtAppName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPoweredBy" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtAppName"
         style="@style/TextAppearance.MaterialComponents.Headline3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -50,15 +50,15 @@
         android:layout_marginTop="@dimen/screen_horizontal_margin_small"
         android:text="@string/select_authentication_method"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toTopOf="@+id/containerButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toBottomOf="@+id/txtAppName"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/containerButtons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
