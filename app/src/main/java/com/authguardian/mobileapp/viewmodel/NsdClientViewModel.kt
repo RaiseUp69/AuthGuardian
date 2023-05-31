@@ -4,6 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.authguardian.mobileapp.enums.AnalyticsEventAction
+import com.authguardian.mobileapp.enums.AnalyticsEventScreen
+import com.authguardian.mobileapp.utils.AnalyticsUtils.sendEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -35,6 +38,7 @@ class NsdClientViewModel : ViewModel() {
     fun init(): Boolean = when {
         isInited -> true
         else -> {
+            sendEvent(AnalyticsEventScreen.NSD_CLIENT_SCRN__VIEW.value)
             isInited = true
             true
         }
@@ -69,5 +73,9 @@ class NsdClientViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    fun onBackPressed() {
+        sendEvent(AnalyticsEventAction.NSD_CLIENT_BTN_BACK_TAP.value)
     }
 }

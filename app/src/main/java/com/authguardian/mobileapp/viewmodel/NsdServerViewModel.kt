@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.authguardian.mobileapp.enums.AnalyticsEventScreen
+import com.authguardian.mobileapp.utils.AnalyticsUtils.sendEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -37,7 +39,7 @@ class NsdServerViewModel : ViewModel() {
         isInited -> true
         else -> {
             this.servicePort = servicePort
-
+            sendEvent(AnalyticsEventScreen.NSD_SERVER_SCRN__VIEW.value)
             isInited = true
             true
         }

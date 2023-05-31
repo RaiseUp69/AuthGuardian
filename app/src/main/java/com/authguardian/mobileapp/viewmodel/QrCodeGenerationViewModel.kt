@@ -8,7 +8,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.R
+import com.authguardian.mobileapp.enums.AnalyticsEventScreen
 import com.authguardian.mobileapp.repository.DataStoreRepository
+import com.authguardian.mobileapp.utils.AnalyticsUtils.sendEvent
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.CoroutineScope
@@ -45,7 +47,7 @@ class QrCodeGenerationViewModel(
         else -> {
             this@QrCodeGenerationViewModel.ssid = ssid
             this@QrCodeGenerationViewModel.password = password
-
+            sendEvent(AnalyticsEventScreen.QR_CODE_GENERATION_SCRN__VIEW.value)
             if (ssid != null && password != null) {
                 generateQrCode()
             }

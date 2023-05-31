@@ -73,6 +73,7 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
         when (view?.id) {
             R.id.btnBack -> {
                 findNavController().popBackStack()
+                viewModel.onBackPressed()
             }
         }
     }

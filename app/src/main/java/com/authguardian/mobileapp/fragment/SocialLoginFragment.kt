@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentSocialLoginBinding
-import com.authguardian.mobileapp.extension.NavigationUtils
+import com.authguardian.mobileapp.utils.NavigationUtils
 import com.authguardian.mobileapp.viewmodel.SocialLoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -101,11 +101,13 @@ class SocialLoginFragment : Fragment(), View.OnClickListener {
     }
 
     private fun onGoogleSignInClicked() {
+        viewModel.onGoogleSignInClicked()
         val signInIntent: Intent = googleSignInClient!!.signInIntent
         resultLauncher.launch(signInIntent)
     }
 
     private fun onGoogleSignOutClicked() {
+        viewModel.onGoogleSignOutClicked()
         googleSignInClient?.signOut()?.addOnCompleteListener(requireActivity()) {
             viewModel.checkIfUserAlreadySignedIn(requireContext())
         }
