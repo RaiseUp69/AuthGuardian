@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.enums.AnalyticsEventScreen
 import com.authguardian.mobileapp.utils.AnalyticsUtils.sendEvent
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -47,28 +47,26 @@ class NsdServerViewModel : ViewModel() {
 
     fun startServerSocket() {
         _isLoading.postValue(true)
-        CoroutineScope(Dispatchers.IO).launch {
-            withContext(Dispatchers.IO) {
-                delay(1000) // only for testing
-                try {
-                    val serverSocket = ServerSocket(servicePort!!)
-                    val socket = serverSocket.accept()
+        viewModelScope.launch(Dispatchers.IO) {
+            delay(1000) // only for testing
+            try {
+                val serverSocket = ServerSocket(servicePort!!)
+                val socket = serverSocket.accept()
 
-                    val input = BufferedReader(InputStreamReader(socket.getInputStream()))
-                    val output = PrintWriter(socket.getOutputStream(), true)
+                val input = BufferedReader(InputStreamReader(socket.getInputStream()))
+                val output = PrintWriter(socket.getOutputStream(), true)
 
-                    output.println("Hello from server!")
-                    val receivedData = input.readLine()
-                    withContext(Dispatchers.Main) {
-                        _receivedMessage.postValue(receivedData)
-                        _isLoading.postValue(false)
-                    }
-                    socket.close()
-                    serverSocket.close()
-                } catch (e: IOException) {
+                output.println("Hello from server!")
+                val receivedData = input.readLine()
+                withContext(Dispatchers.Main) {
+                    _receivedMessage.postValue(receivedData)
                     _isLoading.postValue(false)
-                    Log.e("NSD", "Server socket error: ", e)
                 }
+                socket.close()
+                serverSocket.close()
+            } catch (e: IOException) {
+                _isLoading.postValue(false)
+                Log.e("NSD", "Server socket error: ", e)
             }
         }
     }
