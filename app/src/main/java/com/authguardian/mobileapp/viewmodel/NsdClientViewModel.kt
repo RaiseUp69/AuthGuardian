@@ -4,7 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
+import androidx.lifecycle.viewModelScope
+import com.authguardian.mobileapp.enums.AnalyticsEventAction
+import com.authguardian.mobileapp.enums.AnalyticsEventScreen
+import com.authguardian.mobileapp.utils.AnalyticsUtils.sendEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -35,6 +38,7 @@ class NsdClientViewModel : ViewModel() {
     fun init(): Boolean = when {
         isInited -> true
         else -> {
+            sendEvent(AnalyticsEventScreen.NSD_CLIENT_SCRN__VIEW.value)
             isInited = true
             true
         }
@@ -42,32 +46,34 @@ class NsdClientViewModel : ViewModel() {
 
     fun startClientSocket(serviceAddress: InetAddress, servicePort: Int) {
         _isLoading.postValue(true)
-        CoroutineScope(Dispatchers.IO).launch {
-            withContext(Dispatchers.IO) {
-                delay(1000) // only for testing
-                try {
-                    val socket = Socket(serviceAddress, servicePort)
+        viewModelScope.launch(Dispatchers.IO) {
+            delay(1000) // only for testing
+            try {
+                val socket = Socket(serviceAddress, servicePort)
 
-                    val input = BufferedReader(InputStreamReader(socket.getInputStream()))
-                    val output = PrintWriter(socket.getOutputStream(), true)
+                val input = BufferedReader(InputStreamReader(socket.getInputStream()))
+                val output = PrintWriter(socket.getOutputStream(), true)
 
-                    output.println("Hello from client!")
+                output.println("Hello from client!")
 
-                    val receivedData = input.readLine()
-                    withContext(Dispatchers.Main) {
-                        _receivedMessage.postValue(receivedData)
-                        _isLoading.postValue(false)
-                    }
-                    Log.d("NSD", "Received data from server: $receivedData")
-
-                    socket.close()
-                } catch (e: IOException) {
-                    withContext(Dispatchers.Main) {
-                        _isLoading.postValue(false)
-                    }
-                    Log.e("NSD", "Client socket error: ", e)
+                val receivedData = input.readLine()
+                withContext(Dispatchers.Main) {
+                    _receivedMessage.postValue(receivedData)
+                    _isLoading.postValue(false)
                 }
+                Log.d("NSD", "Received data from server: $receivedData")
+
+                socket.close()
+            } catch (e: IOException) {
+                withContext(Dispatchers.Main) {
+                    _isLoading.postValue(false)
+                }
+                Log.e("NSD", "Client socket error: ", e)
             }
         }
+    }
+
+    fun onBackPressed() {
+        sendEvent(AnalyticsEventAction.NSD_CLIENT_BTN_BACK_TAP.value)
     }
 }

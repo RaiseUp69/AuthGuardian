@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentAuthMethodBinding
-import com.authguardian.mobileapp.extension.NavigationUtils.navigate
+import com.authguardian.mobileapp.utils.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.AuthMethodViewModel
 
 class AuthMethodFragment : Fragment(), OnClickListener {
