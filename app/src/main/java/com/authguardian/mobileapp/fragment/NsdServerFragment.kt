@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
@@ -16,11 +15,9 @@ import com.authguardian.mobileapp.databinding.FragmentNsdServerBinding
 import com.authguardian.mobileapp.utils.UniversalUtils
 import com.authguardian.mobileapp.viewmodel.NsdServerViewModel
 
-class NsdServerFragment : Fragment(), View.OnClickListener {
+class NsdServerFragment : BaseFragment<FragmentNsdServerBinding>(FragmentNsdServerBinding::inflate), View.OnClickListener {
 
     private val viewModel: NsdServerViewModel by viewModels()
-    private var _binding: FragmentNsdServerBinding? = null
-    private val binding get() = _binding!!
 
     // region data
 
@@ -32,8 +29,6 @@ class NsdServerFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNsdServerBinding.inflate(inflater, container, false)
-
         nsdManager = requireContext().getSystemService(Context.NSD_SERVICE) as NsdManager
 
         val serviceInfo = NsdServiceInfo().apply {
@@ -87,7 +82,6 @@ class NsdServerFragment : Fragment(), View.OnClickListener {
 
             override fun onRegistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
                 Log.e(TAG, "Registration failed with error code: $errorCode")
-                // Handle registration failure
             }
 
             override fun onServiceUnregistered(serviceInfo: NsdServiceInfo) {
@@ -96,7 +90,6 @@ class NsdServerFragment : Fragment(), View.OnClickListener {
 
             override fun onUnregistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
                 Log.e(TAG, "Unregistration failed with error code: $errorCode")
-                // Handle unregistration failure
             }
         }
 

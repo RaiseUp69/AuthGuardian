@@ -39,4 +39,5 @@
     <string name="social_login">Social login</string>
     <string name="sign_out">Sign out</string>
     <string name="server_client_image">Server/Client image</string>
+    <string name="google">Google image</string>
 </resources>

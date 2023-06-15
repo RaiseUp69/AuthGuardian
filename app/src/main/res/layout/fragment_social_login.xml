@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".fragment.SocialLoginFragment">
 
+    <ImageView
+        android:layout_width="228dp"
+        android:layout_height="228dp"
+        android:layout_marginTop="@dimen/screen_vertical_margin_big"
+        android:contentDescription="@string/google"
+        android:src="@drawable/img_google"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleSignInButton"
         android:layout_width="0dp"
@@ -18,16 +29,17 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/googleSignOutButton"
+        style="@style/Widget.AuthGuardian.Button.Material"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:contentDescription="@string/sign_out"
         android:src="@drawable/ic_social_login"
         android:text="@string/sign_out"
-        android:visibility="visible"
+        android:visibility="gone"
         app:icon="@drawable/ic_social_login"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>
