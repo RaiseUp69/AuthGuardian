@@ -23,7 +23,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 
-
 class SocialLoginFragment : Fragment(), View.OnClickListener {
 
     private val viewModel: SocialLoginViewModel by viewModels()
@@ -115,11 +114,7 @@ class SocialLoginFragment : Fragment(), View.OnClickListener {
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
-//            val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
-
-            // Signed in successfully, show authenticated UI.
             NavigationUtils.navigate(findNavController(), SocialLoginFragmentDirections.actionSocialLoginFragmentToGoogleSignSuccessfulFragment())
-//            updateUI(account)
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the [GoogleSignInStatusCodes] class reference for more information.
@@ -128,12 +123,6 @@ class SocialLoginFragment : Fragment(), View.OnClickListener {
                 "signInResult:failed code=" + e.statusCode,
                 Snackbar.LENGTH_SHORT
             ).show()
-//            updateUI(null)
         }
-    }
-
-    companion object {
-
-        private val TAG = SocialLoginFragment::class.java.simpleName
     }
 }
