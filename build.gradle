@@ -34,7 +34,7 @@ ext {
 
     //region Tests dependencies
 
-    junitVersion = '4.13.2'
+    junitVersion = '5.9.3'
     mockkVersion = '1.13.5'
 
     //endregion
