@@ -13,11 +13,8 @@ import com.authguardian.mobileapp.R
 
 class MainActivity : AppCompatActivity() {
 
-    // region Data
-
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    // endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

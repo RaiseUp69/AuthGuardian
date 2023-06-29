@@ -56,7 +56,7 @@
             android:visibility="gone" />
     </FrameLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnBack"
         style="@style/Widget.AuthGuardian.Button.Material"
         android:layout_width="0dp"

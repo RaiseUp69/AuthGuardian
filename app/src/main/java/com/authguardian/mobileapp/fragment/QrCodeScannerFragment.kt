@@ -6,14 +6,11 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.SurfaceHolder
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.util.isNotEmpty
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.const.QrCode
@@ -30,13 +27,10 @@ import com.google.android.gms.vision.barcode.Barcode.QR_CODE
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.material.snackbar.Snackbar
 
-class QrCodeScannerFragment : Fragment() {
+class QrCodeScannerFragment : BaseFragment<FragmentQrCodeScannerBinding>(FragmentQrCodeScannerBinding::inflate) {
 
     private val viewModel: QrCodeScannerViewModel by viewModels()
     private var cameraSource: CameraSource? = null
-
-    private var _binding: FragmentQrCodeScannerBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,25 +49,12 @@ class QrCodeScannerFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentQrCodeScannerBinding.inflate(inflater, container, false)
-        setupCamera()
-        binding.surfaceView.holder.addCallback(callback)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupCamera()
+        binding.surfaceView.holder.addCallback(callback)
 
         viewModel.init()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onDestroy() {

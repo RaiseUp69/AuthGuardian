@@ -6,12 +6,9 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -26,7 +23,7 @@ import com.authguardian.mobileapp.utils.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.QrCodeGenerationViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
+class QrCodeGenerationFragment : BaseFragment<FragmentQrCodeGenerationBinding>(FragmentQrCodeGenerationBinding::inflate), View.OnClickListener {
 
     @Suppress("UNCHECKED_CAST")
     private val viewModel: QrCodeGenerationViewModel by viewModels {
@@ -38,18 +35,7 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private var _binding: FragmentQrCodeGenerationBinding? = null
-    private val binding get() = _binding!!
-
     private var isCameraPermissionDeniedPermanently: Boolean = false
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentQrCodeGenerationBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,11 +60,6 @@ class QrCodeGenerationFragment : Fragment(), View.OnClickListener {
         binding.btnScanQrCode.setOnClickListener(this)
         binding.btnSaveQrCode.setOnClickListener(this)
         checkCameraPermission()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onResume() {
