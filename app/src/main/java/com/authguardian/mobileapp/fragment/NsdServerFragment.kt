@@ -5,9 +5,7 @@ import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
@@ -25,10 +23,9 @@ class NsdServerFragment : BaseFragment<FragmentNsdServerBinding>(FragmentNsdServ
     private var registrationListener: NsdManager.RegistrationListener? = null
     // endregion
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         nsdManager = requireContext().getSystemService(Context.NSD_SERVICE) as NsdManager
 
         val serviceInfo = NsdServiceInfo().apply {
@@ -44,12 +41,11 @@ class NsdServerFragment : BaseFragment<FragmentNsdServerBinding>(FragmentNsdServ
         }
 
         viewModel.startServerSocket()
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         viewModel.receivedMessage.observe(viewLifecycleOwner) { message ->
+            if (message.isNullOrEmpty()) {
+                return@observe
+            }
             binding.txtMessage.text = message
         }
 

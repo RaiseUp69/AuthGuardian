@@ -3,11 +3,8 @@ package com.authguardian.mobileapp.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
@@ -23,12 +20,9 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 
-class SocialLoginFragment : Fragment(), View.OnClickListener {
+class SocialLoginFragment : BaseFragment<FragmentSocialLoginBinding>(FragmentSocialLoginBinding::inflate), View.OnClickListener {
 
     private val viewModel: SocialLoginViewModel by viewModels()
-
-    private var _binding: FragmentSocialLoginBinding? = null
-    private val binding get() = _binding!!
 
     private var googleSignInClient: GoogleSignInClient? = null
 
@@ -36,21 +30,13 @@ class SocialLoginFragment : Fragment(), View.OnClickListener {
         if (result.resultCode == Activity.RESULT_OK) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
             handleSignInResult(task)
-            viewModel.checkIfUserAlreadySignedIn(requireContext())
+            viewModel.isSignInAvailable(requireContext())
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSocialLoginBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        viewModel.checkIfUserAlreadySignedIn(requireContext())
+        viewModel.isSignInAvailable(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,33 +68,23 @@ class SocialLoginFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.googleSignInButton -> {
-                onGoogleSignInClicked()
-            }
-
-            R.id.googleSignOutButton -> {
-                onGoogleSignOutClicked()
-            }
+            R.id.googleSignInButton -> onGoogleSignInClicked()
+            R.id.googleSignOutButton -> onGoogleSignOutClicked()
         }
     }
 
     private fun onGoogleSignInClicked() {
         viewModel.onGoogleSignInClicked()
-        val signInIntent: Intent = googleSignInClient!!.signInIntent
+        val signInIntent: Intent? = googleSignInClient?.signInIntent
         resultLauncher.launch(signInIntent)
     }
 
     private fun onGoogleSignOutClicked() {
         viewModel.onGoogleSignOutClicked()
         googleSignInClient?.signOut()?.addOnCompleteListener(requireActivity()) {
-            viewModel.checkIfUserAlreadySignedIn(requireContext())
+            viewModel.isSignInAvailable(requireContext())
         }
     }
 

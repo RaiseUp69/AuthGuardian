@@ -44,21 +44,23 @@ class QrCodeGenerationFragment : BaseFragment<FragmentQrCodeGenerationBinding>(F
             findNavController().popBackStack()
         }
 
-        viewModel.qrCode.observe(viewLifecycleOwner) { qrCode ->
-            binding.imgQrCode.setImageBitmap(qrCode)
-            binding.btnSaveQrCode.isVisible = true
-        }
+        with(binding) {
+            viewModel.qrCode.observe(viewLifecycleOwner) { qrCode ->
+                imgQrCode.setImageBitmap(qrCode)
+                btnSaveQrCode.isVisible = true
+            }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.spinner.isVisible = isLoading
-        }
+            viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+                spinner.isVisible = isLoading
+            }
 
-        viewModel.savedMessage.observe(viewLifecycleOwner) { message ->
-            Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
-        }
+            viewModel.savedMessage.observe(viewLifecycleOwner) { message ->
+                Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
+            }
 
-        binding.btnScanQrCode.setOnClickListener(this)
-        binding.btnSaveQrCode.setOnClickListener(this)
+            btnScanQrCode.setOnClickListener(this@QrCodeGenerationFragment)
+            btnSaveQrCode.setOnClickListener(this@QrCodeGenerationFragment)
+        }
         checkCameraPermission()
     }
 

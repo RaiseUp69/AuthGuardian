@@ -18,14 +18,19 @@ import com.authguardian.mobileapp.viewmodel.NsdClientViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class NsdClientFragment : Fragment(), View.OnClickListener {
+
     private val viewModel: NsdClientViewModel by viewModels()
+
     private var _binding: FragmentNsdClientBinding? = null
     private val binding get() = _binding!!
+
     // region nsd
     private var nsdManager: NsdManager? = null
     private var discoveryListener: NsdManager.DiscoveryListener? = null
     private var resolveListener: NsdManager.ResolveListener? = null
+
     // endregion
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,9 +38,10 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
         _binding = FragmentNsdClientBinding.inflate(inflater, container, false)
         nsdManager = requireContext().getSystemService(Context.NSD_SERVICE) as NsdManager
         setupListeners()
-        nsdManager!!.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener)
+        nsdManager?.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener)
         return binding.root
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         nsdManager?.let { nsdManager ->
@@ -45,6 +51,7 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
         }
         _binding = null
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.init()
@@ -52,6 +59,7 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading -> binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE }
         binding.btnBack.setOnClickListener(this@NsdClientFragment)
     }
+
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btnBack -> {
@@ -60,6 +68,7 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
             }
         }
     }
+
     private fun setupListeners() {
         discoveryListener = object : NsdManager.DiscoveryListener {
             override fun onDiscoveryStarted(regType: String) {
@@ -111,6 +120,7 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
             override fun onResolveFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
                 Log.e("NSD", "Resolve failed with error code: $errorCode")
             }
+
             override fun onServiceResolved(serviceInfo: NsdServiceInfo) {
                 Log.d("NSD", "Service resolved: ${serviceInfo.serviceName}")
                 if (serviceInfo.serviceName == getDeviceBrandAndModel()) {
@@ -121,7 +131,9 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
             }
         }
     }
+
     companion object {
+
         private const val SERVICE_TYPE = "_http._tcp."
     }
 }
