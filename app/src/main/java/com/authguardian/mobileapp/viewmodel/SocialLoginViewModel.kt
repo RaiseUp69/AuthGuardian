@@ -19,11 +19,11 @@ class SocialLoginViewModel(application: Application) : AndroidViewModel(applicat
         sendEvent(AnalyticsEventScreen.SOCIAL_LOGIN_SCRN__VIEW.value)
     }
 
-    fun checkIfUserAlreadySignedIn(context: Context) {
-        /*
-            Check for existing Google Sign In account, if the user is already signed in
-            the GoogleSignInAccount will be non-null.
-        */
+    fun isSignInAvailable(context: Context) {
+        /**
+        Check for existing Google account, if the user is already signed in
+        account will be non-null.
+         */
         val account = GoogleSignIn.getLastSignedInAccount(context)
         _isGoogleSignInAvailable.value = account == null
     }

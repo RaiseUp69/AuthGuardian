@@ -17,19 +17,16 @@ class NsdChooseRoleFragment : BaseFragment<FragmentNsdChooseRoleBinding>(Fragmen
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.init()
-        binding.btnClient.setOnClickListener(this@NsdChooseRoleFragment)
-        binding.btnServer.setOnClickListener(this@NsdChooseRoleFragment)
+        with(binding) {
+            btnClient.setOnClickListener(this@NsdChooseRoleFragment)
+            btnServer.setOnClickListener(this@NsdChooseRoleFragment)
+        }
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.btnClient -> {
-                navigate(findNavController(), NsdChooseRoleFragmentDirections.actionNsdChooseRoleFragmentToNsdClientFragment())
-            }
-
-            R.id.btnServer -> {
-                navigate(findNavController(), NsdChooseRoleFragmentDirections.actionNsdChooseRoleFragmentToNsdServerFragment())
-            }
+            R.id.btnClient -> navigate(findNavController(), NsdChooseRoleFragmentDirections.actionNsdChooseRoleFragmentToNsdClientFragment())
+            R.id.btnServer -> navigate(findNavController(), NsdChooseRoleFragmentDirections.actionNsdChooseRoleFragmentToNsdServerFragment())
         }
     }
 }

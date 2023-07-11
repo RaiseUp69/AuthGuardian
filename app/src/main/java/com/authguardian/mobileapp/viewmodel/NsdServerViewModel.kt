@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.enums.AnalyticsEventScreen
 import com.authguardian.mobileapp.utils.AnalyticsUtils.sendEvent
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
@@ -24,12 +24,14 @@ class NsdServerViewModel : ViewModel() {
 
     private var isInited: Boolean = false
     private var servicePort: Int? = null
+    private var bufferedReader: BufferedReader? = null
+    private var printWriter: PrintWriter? = null
     // endregion
 
     // region LiveData
 
-    private val _receivedMessage: MutableLiveData<String> = MutableLiveData()
-    val receivedMessage: LiveData<String> = _receivedMessage
+    private val _receivedMessage: MutableLiveData<String?> = MutableLiveData()
+    val receivedMessage: LiveData<String?> = _receivedMessage
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -46,18 +48,17 @@ class NsdServerViewModel : ViewModel() {
     }
 
     fun startServerSocket() {
-        _isLoading.postValue(true)
+        _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            delay(1000) // only for testing
             try {
                 val serverSocket = ServerSocket(servicePort!!)
                 val socket = serverSocket.accept()
 
-                val input = BufferedReader(InputStreamReader(socket.getInputStream()))
-                val output = PrintWriter(socket.getOutputStream(), true)
+                bufferedReader = BufferedReader(InputStreamReader(socket.getInputStream()))
+                printWriter = PrintWriter(socket.getOutputStream(), true)
 
-                output.println("Hello from server!")
-                val receivedData = input.readLine()
+                printWriter?.println("Hello from server!")
+                val receivedData = bufferedReader?.readLine()
                 withContext(Dispatchers.Main) {
                     _receivedMessage.postValue(receivedData)
                     _isLoading.postValue(false)
@@ -68,6 +69,14 @@ class NsdServerViewModel : ViewModel() {
                 _isLoading.postValue(false)
                 Log.e("NSD", "Server socket error: ", e)
             }
+            _isLoading.postValue(false)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        bufferedReader?.close()
+        printWriter?.close()
+        viewModelScope.cancel()
     }
 }
