@@ -31,6 +31,7 @@
     <string name="i_want_to_be_client">I want to be client</string>
     <string name="message_from_client">Message from client</string>
     <string name="message_from_server">Message from server</string>
+    <string name="message_to_server">Message to server</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="powered_by_bohdan_oliinyk">Powered by Bohdan Oliinyk</string>
     <string name="save_this_qr_code"><u>Save this QR code</u></string>
@@ -40,4 +41,9 @@
     <string name="sign_out">Sign out</string>
     <string name="server_client_image">Server/Client image</string>
     <string name="google">Google image</string>
+    <string name="server_data">Server data</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="swipe_left">Swipe left</string>
+    <string name="please_enter_message">Please enter message to server</string>
+    <string name="send">Send</string>
 </resources>

@@ -19,6 +19,7 @@ import com.authguardian.mobileapp.const.QrCode.USER_PASSWORD
 import com.authguardian.mobileapp.const.QrCode.USER_SSID
 import com.authguardian.mobileapp.databinding.FragmentQrCodeGenerationBinding
 import com.authguardian.mobileapp.provider.DataStoreRepositoryProvider
+import com.authguardian.mobileapp.utils.AnalyticsUtils
 import com.authguardian.mobileapp.utils.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.QrCodeGenerationViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -30,7 +31,8 @@ class QrCodeGenerationFragment : BaseFragment<FragmentQrCodeGenerationBinding>(F
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T = QrCodeGenerationViewModel(
                 requireActivity().application,
-                DataStoreRepositoryProvider.instance.getInstance(requireContext())
+                DataStoreRepositoryProvider.instance.getInstance(requireContext()),
+                AnalyticsUtils,
             ) as T
         }
     }

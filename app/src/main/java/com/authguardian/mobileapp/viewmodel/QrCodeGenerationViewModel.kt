@@ -9,18 +9,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.enums.AnalyticsEventScreen
+import com.authguardian.mobileapp.interfaces.AnalyticsInterface
 import com.authguardian.mobileapp.repository.DataStoreRepository
-import com.authguardian.mobileapp.utils.AnalyticsUtils.sendEvent
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class QrCodeGenerationViewModel(
     application: Application,
-    private val dataStoreRepository: DataStoreRepository
+    private val dataStoreRepository: DataStoreRepository,
+    private val analyticsUtils: AnalyticsInterface
 ) : AndroidViewModel(application) {
 
     // region LiveData
@@ -47,7 +47,7 @@ class QrCodeGenerationViewModel(
         else -> {
             this@QrCodeGenerationViewModel.ssid = ssid
             this@QrCodeGenerationViewModel.password = password
-            sendEvent(AnalyticsEventScreen.QR_CODE_GENERATION_SCRN__VIEW.value)
+            analyticsUtils.sendEvent(AnalyticsEventScreen.QR_CODE_GENERATION_SCRN__VIEW.value)
             if (ssid != null && password != null) {
                 generateQrCode()
             }
@@ -60,7 +60,6 @@ class QrCodeGenerationViewModel(
     private fun generateQrCode() {
         CoroutineScope(Dispatchers.IO).launch {
             _isLoading.postValue(true)
-            delay(1000) // only for demonstration
             val size = 512
             val qrCodeContent = "WIFI:S:${dataStoreRepository.getString(USER_SSID) ?: ssid};T:WPA;P:${dataStoreRepository.getString(USER_PASSWORD) ?: password};;"
             val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size)
@@ -90,8 +89,7 @@ class QrCodeGenerationViewModel(
 
     companion object {
 
-        private const val USER_SSID = "USER_SSID"
-        private const val USER_PASSWORD = "USER_PASSWORD"
-        private val TAG = QrCodeGenerationViewModel::class.java.simpleName
+        const val USER_SSID = "USER_SSID"
+        const val USER_PASSWORD = "USER_PASSWORD"
     }
 }
