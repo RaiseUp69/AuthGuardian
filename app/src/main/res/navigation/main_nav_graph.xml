@@ -26,9 +26,18 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
         <action
             android:id="@+id/action_authMethodFragment_to_social_login_graph"
             app:destination="@id/social_login_graph"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_authMethodFragment_to_server_data_graph"
+            app:destination="@id/server_data_graph"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -38,4 +47,5 @@
     <include app:graph="@navigation/qr_code_authentication_graph" />
     <include app:graph="@navigation/nsd_authentication_graph" />
     <include app:graph="@navigation/social_login_graph" />
+    <include app:graph="@navigation/server_data_graph" />
 </navigation>

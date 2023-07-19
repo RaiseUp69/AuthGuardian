@@ -30,12 +30,11 @@ allprojects {
 
 // Define versions in a single place
 ext {
-    kotlinCoroutinesVersion = '1.7.1'
+    kotlinCoroutinesVersion = '1.7.2'
 
     //region Tests dependencies
 
     junitVersion = '5.9.3'
     mockkVersion = '1.13.5'
-
     //endregion
 }
