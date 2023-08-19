@@ -14,9 +14,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
-import com.authguardian.mobileapp.const.Extra
-import com.authguardian.mobileapp.const.QrCode.USER_PASSWORD
-import com.authguardian.mobileapp.const.QrCode.USER_SSID
+import com.authguardian.mobileapp.constant.Extra
+import com.authguardian.mobileapp.constant.QrCode.USER_PASSWORD
+import com.authguardian.mobileapp.constant.QrCode.USER_SSID
 import com.authguardian.mobileapp.databinding.FragmentQrCodeGenerationBinding
 import com.authguardian.mobileapp.provider.DataStoreRepositoryProvider
 import com.authguardian.mobileapp.utils.AnalyticsUtils

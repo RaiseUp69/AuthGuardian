@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.util.isNotEmpty
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.authguardian.mobileapp.const.QrCode
+import com.authguardian.mobileapp.constant.QrCode
 import com.authguardian.mobileapp.databinding.FragmentQrCodeScannerBinding
 import com.authguardian.mobileapp.utils.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.QrCodeScannerViewModel
