@@ -2,12 +2,12 @@ package com.authguardian.mobileapp.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.adapter.DatabaseAdapter
 import com.authguardian.mobileapp.service.MessageService
 import com.authguardian.mobileapp.utils.CoroutineDispatchersProvider
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -18,8 +18,8 @@ class DatabaseViewModel(
     private val dispatcher: CoroutineDispatchersProvider
 ) : AndroidViewModel(application) {
 
-    private var _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean> = _isLoading
+    private var _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
 
     fun init() {
         updateData()
@@ -31,7 +31,7 @@ class DatabaseViewModel(
 
     fun updateData() = viewModelScope.launch(dispatcher.IO) {
         try {
-            _isLoading.postValue(true)
+            _isLoading.value = true
             val messages = messageService.getMessages()
 
             val items = messages.map {

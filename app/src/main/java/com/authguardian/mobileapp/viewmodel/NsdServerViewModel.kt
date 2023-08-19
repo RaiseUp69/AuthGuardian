@@ -1,14 +1,14 @@
 package com.authguardian.mobileapp.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.enums.AnalyticsEventScreen
 import com.authguardian.mobileapp.utils.AnalyticsUtils.sendEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
@@ -30,11 +30,11 @@ class NsdServerViewModel : ViewModel() {
 
     // region LiveData
 
-    private val _receivedMessage: MutableLiveData<String?> = MutableLiveData()
-    val receivedMessage: LiveData<String?> = _receivedMessage
+    private val _receivedMessage = MutableStateFlow("")
+    val receivedMessage = _receivedMessage.asStateFlow()
 
-    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
     // endregion
 
     fun init(servicePort: Int): Boolean = when {
@@ -60,16 +60,16 @@ class NsdServerViewModel : ViewModel() {
                 printWriter?.println("Hello from server!")
                 val receivedData = bufferedReader?.readLine()
                 withContext(Dispatchers.Main) {
-                    _receivedMessage.postValue(receivedData)
-                    _isLoading.postValue(false)
+                    _receivedMessage.value = receivedData.toString()
+                    _isLoading.value = false
                 }
                 socket.close()
                 serverSocket.close()
             } catch (e: IOException) {
-                _isLoading.postValue(false)
+                _isLoading.value = false
                 Log.e("NSD", "Server socket error: ", e)
             }
-            _isLoading.postValue(false)
+            _isLoading.value = false
         }
     }
 

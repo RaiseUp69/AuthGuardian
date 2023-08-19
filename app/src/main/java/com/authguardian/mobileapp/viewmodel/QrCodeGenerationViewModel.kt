@@ -4,8 +4,6 @@ import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.enums.AnalyticsEventScreen
@@ -15,6 +13,8 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class QrCodeGenerationViewModel(
@@ -25,14 +25,14 @@ class QrCodeGenerationViewModel(
 
     // region LiveData
 
-    private var _qrCode: MutableLiveData<Bitmap> = MutableLiveData()
-    val qrCode: LiveData<Bitmap> = _qrCode
+    private var _qrCode = MutableStateFlow<Bitmap>(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565))
+    val qrCode = _qrCode.asStateFlow()
 
-    private var _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean> = _isLoading
+    private var _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
 
-    private var _savedMessage: MutableLiveData<String> = MutableLiveData()
-    val savedMessage: LiveData<String> = _savedMessage
+    private var _savedMessage = MutableStateFlow("")
+    val savedMessage = _savedMessage.asStateFlow()
     // endregion
 
     // region Data
@@ -59,18 +59,18 @@ class QrCodeGenerationViewModel(
 
     private fun generateQrCode() {
         CoroutineScope(Dispatchers.IO).launch {
-            _isLoading.postValue(true)
+            _isLoading.value = true
             val size = 512
             val qrCodeContent = "WIFI:S:${dataStoreRepository.getString(USER_SSID) ?: ssid};T:WPA;P:${dataStoreRepository.getString(USER_PASSWORD) ?: password};;"
             val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size)
-            _qrCode.postValue(Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
+            _qrCode.value = (Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
                 for (x in 0 until size) {
                     for (y in 0 until size) {
                         it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
                     }
                 }
             })
-            _isLoading.postValue(false)
+            _isLoading.value = false
         }
     }
 
@@ -82,7 +82,7 @@ class QrCodeGenerationViewModel(
                     putString(USER_SSID, ssid!!)
                     putString(USER_PASSWORD, password!!)
                 }
-                _savedMessage.postValue(getApplication<Application>().getString(R.string.qr_code_saved))
+                _savedMessage.value = getApplication<Application>().getString(R.string.qr_code_saved)
             }
         }
     }
