@@ -13,7 +13,9 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -28,8 +30,8 @@ class QrCodeGenerationViewModel(
     private var _qrCode = MutableStateFlow<Bitmap>(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565))
     val qrCode = _qrCode.asStateFlow()
 
-    private var _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
+    private val _isLoading = MutableSharedFlow<Boolean>()
+    val isLoading = _isLoading.asSharedFlow()
 
     private var _savedMessage = MutableStateFlow("")
     val savedMessage = _savedMessage.asStateFlow()
@@ -59,18 +61,18 @@ class QrCodeGenerationViewModel(
 
     private fun generateQrCode() {
         CoroutineScope(Dispatchers.IO).launch {
-            _isLoading.value = true
+            _isLoading.emit(true)
             val size = 512
             val qrCodeContent = "WIFI:S:${dataStoreRepository.getString(USER_SSID) ?: ssid};T:WPA;P:${dataStoreRepository.getString(USER_PASSWORD) ?: password};;"
             val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size)
-            _qrCode.value = (Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
+            _qrCode.value = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
                 for (x in 0 until size) {
                     for (y in 0 until size) {
                         it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
                     }
                 }
-            })
-            _isLoading.value = false
+            }
+            _isLoading.emit(false)
         }
     }
 

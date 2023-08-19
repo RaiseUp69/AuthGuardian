@@ -7,7 +7,9 @@ import com.authguardian.mobileapp.enums.AnalyticsEventScreen
 import com.authguardian.mobileapp.utils.AnalyticsUtils.sendEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,8 +35,8 @@ class NsdServerViewModel : ViewModel() {
     private val _receivedMessage = MutableStateFlow("")
     val receivedMessage = _receivedMessage.asStateFlow()
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
+    private val _isLoading = MutableSharedFlow<Boolean>()
+    val isLoading = _isLoading.asSharedFlow()
     // endregion
 
     fun init(servicePort: Int): Boolean = when {
@@ -48,8 +50,8 @@ class NsdServerViewModel : ViewModel() {
     }
 
     fun startServerSocket() {
-        _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.emit(true)
             try {
                 val serverSocket = ServerSocket(servicePort!!)
                 val socket = serverSocket.accept()
@@ -61,15 +63,15 @@ class NsdServerViewModel : ViewModel() {
                 val receivedData = bufferedReader?.readLine()
                 withContext(Dispatchers.Main) {
                     _receivedMessage.value = receivedData.toString()
-                    _isLoading.value = false
+                    _isLoading.emit(false)
                 }
                 socket.close()
                 serverSocket.close()
             } catch (e: IOException) {
-                _isLoading.value = false
+                _isLoading.emit(false)
                 Log.e("NSD", "Server socket error: ", e)
             }
-            _isLoading.value = false
+            _isLoading.emit(false)
         }
     }
 
