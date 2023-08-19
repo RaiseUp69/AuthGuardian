@@ -8,31 +8,21 @@ import android.view.View
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.authguardian.mobileapp.R
-import com.authguardian.mobileapp.adapter.DatabaseAdapter
 import com.authguardian.mobileapp.databinding.FragmentDatabaseBinding
-import com.authguardian.mobileapp.module.NetworkModule
-import com.authguardian.mobileapp.utils.CoroutineDispatchersProvider
-import com.authguardian.mobileapp.utils.Network
 import com.authguardian.mobileapp.viewmodel.DatabaseViewModel
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.closestDI
+import org.kodein.di.android.x.viewmodel.viewModel
 
-class DatabaseFragment : BaseFragment<FragmentDatabaseBinding>(FragmentDatabaseBinding::inflate), View.OnClickListener {
+class DatabaseFragment : BaseFragment<FragmentDatabaseBinding>(FragmentDatabaseBinding::inflate),
+    View.OnClickListener, DIAware {
 
-    private val viewModel: DatabaseViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val okHttpInstance = NetworkModule().getOkHttpClientInstance(requireActivity().application)
-                val messageService = Network.getMessageServiceInstance(Network.getRetrofitInstance(okHttpInstance))
-                return DatabaseViewModel(requireActivity().application, DatabaseAdapter(), messageService, dispatcher = CoroutineDispatchersProvider()) as T
-            }
-        }
-    }
+    override val di: DI by closestDI()
+    private val viewModel: DatabaseViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

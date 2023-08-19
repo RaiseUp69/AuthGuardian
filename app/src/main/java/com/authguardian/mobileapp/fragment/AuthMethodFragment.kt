@@ -5,17 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.EditText
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentAuthMethodBinding
 import com.authguardian.mobileapp.utils.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.AuthMethodViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.closestDI
+import org.kodein.di.android.x.viewmodel.viewModel
 
-class AuthMethodFragment : BaseFragment<FragmentAuthMethodBinding>(FragmentAuthMethodBinding::inflate), OnClickListener {
+class AuthMethodFragment : BaseFragment<FragmentAuthMethodBinding>(FragmentAuthMethodBinding::inflate),
+    OnClickListener, DIAware {
 
-    private val viewModel: AuthMethodViewModel by viewModels()
+    override val di: DI by closestDI()
+    private val viewModel: AuthMethodViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,7 +67,7 @@ class AuthMethodFragment : BaseFragment<FragmentAuthMethodBinding>(FragmentAuthM
                     .setMessage(requireContext().getString(R.string.please_enter_message))
                     .setView(dialogView)
                     .setPositiveButton(R.string.send) { dialog, _ ->
-                        viewModel.postMessage(requireContext(), editText.text.toString())
+                        viewModel.postMessage(editText.text.toString())
                         dialog.dismiss()
                     }
                     .create()
