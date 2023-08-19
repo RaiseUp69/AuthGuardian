@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.adapter.DatabaseAdapter
 import com.authguardian.mobileapp.service.MessageService
 import com.authguardian.mobileapp.utils.CoroutineDispatchersProvider
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -18,8 +18,8 @@ class DatabaseViewModel(
     private val dispatcher: CoroutineDispatchersProvider
 ) : AndroidViewModel(application) {
 
-    private var _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
+    private var _isLoading = MutableSharedFlow<Boolean>()
+    val isLoading = _isLoading.asSharedFlow()
 
     fun init() {
         updateData()
@@ -31,7 +31,7 @@ class DatabaseViewModel(
 
     fun updateData() = viewModelScope.launch(dispatcher.IO) {
         try {
-            _isLoading.value = true
+            _isLoading.emit(true)
             val messages = messageService.getMessages()
 
             val items = messages.map {
@@ -40,7 +40,7 @@ class DatabaseViewModel(
 
             withContext(dispatcher.Main) {
                 adapter.submitList(items)
-                _isLoading.value = false
+                _isLoading.emit(false)
             }
         } catch (e: Exception) {
             e.printStackTrace()
