@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.adapter.DatabaseAdapter
+import com.authguardian.mobileapp.repository.MessageRepository
 import com.authguardian.mobileapp.service.MessageService
 import com.authguardian.mobileapp.utils.CoroutineDispatchersProvider
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -15,7 +17,8 @@ class DatabaseViewModel(
     application: Application,
     val adapter: DatabaseAdapter,
     private val messageService: MessageService,
-    private val dispatcher: CoroutineDispatchersProvider
+    private val dispatcher: CoroutineDispatchersProvider,
+    private val messageRepository: MessageRepository
 ) : AndroidViewModel(application) {
 
     private var _isLoading = MutableSharedFlow<Boolean>()
@@ -44,6 +47,17 @@ class DatabaseViewModel(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    fun onPostMessageClicked(text: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                messageRepository.postMessage(text)
+                updateData()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }
