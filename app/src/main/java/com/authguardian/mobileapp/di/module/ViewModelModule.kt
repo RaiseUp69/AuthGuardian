@@ -21,7 +21,6 @@ val viewModelModule = DI.Module(VIEW_MODEL_MODULE) {
             instance(),
             instance(),
             instance(),
-            instance(),
             instance()
         )
     }

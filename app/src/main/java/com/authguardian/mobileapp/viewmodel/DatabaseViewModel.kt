@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.authguardian.mobileapp.adapter.DatabaseAdapter
 import com.authguardian.mobileapp.repository.MessageRepository
-import com.authguardian.mobileapp.service.MessageService
 import com.authguardian.mobileapp.utils.CoroutineDispatchersProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +15,6 @@ import kotlinx.coroutines.withContext
 class DatabaseViewModel(
     application: Application,
     val adapter: DatabaseAdapter,
-    private val messageService: MessageService,
     private val dispatcher: CoroutineDispatchersProvider,
     private val messageRepository: MessageRepository
 ) : AndroidViewModel(application) {
@@ -35,7 +33,7 @@ class DatabaseViewModel(
     fun updateData() = viewModelScope.launch(dispatcher.IO) {
         try {
             _isLoading.emit(true)
-            val messages = messageService.getMessages()
+            val messages = messageRepository.fetchAllMessages()
 
             val items = messages.map {
                 DatabaseAdapter.Item.DatabaseMessageItem(it.text)
@@ -47,6 +45,7 @@ class DatabaseViewModel(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            _isLoading.emit(false)
         }
     }
 

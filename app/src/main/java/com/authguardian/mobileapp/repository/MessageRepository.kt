@@ -8,4 +8,6 @@ class MessageRepository(private val messageService: MessageService) {
     suspend fun postMessage(message: String) {
         messageService.postMessage(MessageRequest(message))
     }
+
+    suspend fun fetchAllMessages() = messageService.getMessages()
 }
