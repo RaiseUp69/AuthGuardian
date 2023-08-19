@@ -10,12 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentNsdClientBinding
 import com.authguardian.mobileapp.utils.UniversalUtils.getDeviceBrandAndModel
 import com.authguardian.mobileapp.viewmodel.NsdClientViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class NsdClientFragment : Fragment(), View.OnClickListener {
 
@@ -55,8 +60,16 @@ class NsdClientFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.init()
-        viewModel.receivedMessage.observe(viewLifecycleOwner) { message -> binding.txtMessage.text = message }
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading -> binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.receivedMessage.collectLatest { message ->
+                    binding.txtMessage.text = message
+                }
+                viewModel.isLoading.collectLatest { isLoading ->
+                    binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+                }
+            }
+        }
         binding.btnBack.setOnClickListener(this@NsdClientFragment)
     }
 

@@ -9,10 +9,14 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentDatabaseBinding
 import com.authguardian.mobileapp.viewmodel.DatabaseViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
@@ -31,8 +35,12 @@ class DatabaseFragment : BaseFragment<FragmentDatabaseBinding>(FragmentDatabaseB
         viewModel.init()
 
         with(binding) {
-            viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-                pbLoading.isVisible = isLoading
+            viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.isLoading.collectLatest {
+                        pbLoading.isVisible = it
+                    }
+                }
             }
 
             with(rvMessages) {

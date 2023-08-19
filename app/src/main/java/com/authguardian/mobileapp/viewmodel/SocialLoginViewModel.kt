@@ -3,17 +3,17 @@ package com.authguardian.mobileapp.viewmodel
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.authguardian.mobileapp.enums.AnalyticsEventAction
 import com.authguardian.mobileapp.enums.AnalyticsEventScreen
 import com.authguardian.mobileapp.utils.AnalyticsUtils.sendEvent
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class SocialLoginViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _isGoogleSignInAvailable = MutableLiveData<Boolean>()
-    val isGoogleSignInAvailable: LiveData<Boolean> = _isGoogleSignInAvailable
+    private val _isGoogleSignInAvailable = MutableStateFlow(false)
+    val isGoogleSignInAvailable = _isGoogleSignInAvailable.asStateFlow()
 
     fun init() {
         sendEvent(AnalyticsEventScreen.SOCIAL_LOGIN_SCRN__VIEW.value)

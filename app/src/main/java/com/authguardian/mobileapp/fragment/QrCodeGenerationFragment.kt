@@ -10,8 +10,11 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.constant.Extra
@@ -23,6 +26,8 @@ import com.authguardian.mobileapp.utils.AnalyticsUtils
 import com.authguardian.mobileapp.utils.NavigationUtils.navigate
 import com.authguardian.mobileapp.viewmodel.QrCodeGenerationViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class QrCodeGenerationFragment : BaseFragment<FragmentQrCodeGenerationBinding>(FragmentQrCodeGenerationBinding::inflate), View.OnClickListener {
 
@@ -47,17 +52,21 @@ class QrCodeGenerationFragment : BaseFragment<FragmentQrCodeGenerationBinding>(F
         }
 
         with(binding) {
-            viewModel.qrCode.observe(viewLifecycleOwner) { qrCode ->
-                imgQrCode.setImageBitmap(qrCode)
-                btnSaveQrCode.isVisible = true
-            }
+            viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.qrCode.collectLatest { qrCode ->
+                        imgQrCode.setImageBitmap(qrCode)
+                        btnSaveQrCode.isVisible = true
+                    }
 
-            viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-                spinner.isVisible = isLoading
-            }
+                    viewModel.isLoading.collectLatest { isLoading ->
+                        spinner.isVisible = isLoading
+                    }
 
-            viewModel.savedMessage.observe(viewLifecycleOwner) { message ->
-                Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
+                    viewModel.savedMessage.collectLatest { message ->
+                        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
+                    }
+                }
             }
 
             btnScanQrCode.setOnClickListener(this@QrCodeGenerationFragment)

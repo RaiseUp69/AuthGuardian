@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentSocialLoginBinding
@@ -19,6 +22,8 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class SocialLoginFragment : BaseFragment<FragmentSocialLoginBinding>(FragmentSocialLoginBinding::inflate), View.OnClickListener {
 
@@ -51,16 +56,20 @@ class SocialLoginFragment : BaseFragment<FragmentSocialLoginBinding>(FragmentSoc
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), googleSignIn)
 
         with(binding) {
-            viewModel.isGoogleSignInAvailable.observe(viewLifecycleOwner) { isGoogleSignInAvailable ->
-                if (isGoogleSignInAvailable) {
-                    with(googleSignInButton) {
-                        visibility = View.VISIBLE
-                        setSize(SignInButton.SIZE_ICON_ONLY)
+            viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.isGoogleSignInAvailable.collectLatest { isGoogleSignInAvailable ->
+                        if (isGoogleSignInAvailable) {
+                            with(googleSignInButton) {
+                                visibility = View.VISIBLE
+                                setSize(SignInButton.SIZE_ICON_ONLY)
+                            }
+                            googleSignOutButton.visibility = View.GONE
+                        } else {
+                            googleSignInButton.visibility = View.GONE
+                            googleSignOutButton.visibility = View.VISIBLE
+                        }
                     }
-                    googleSignOutButton.visibility = View.GONE
-                } else {
-                    googleSignInButton.visibility = View.GONE
-                    googleSignOutButton.visibility = View.VISIBLE
                 }
             }
             googleSignInButton.setOnClickListener(this@SocialLoginFragment)

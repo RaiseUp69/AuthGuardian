@@ -7,11 +7,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.authguardian.mobileapp.R
 import com.authguardian.mobileapp.databinding.FragmentNsdServerBinding
 import com.authguardian.mobileapp.utils.UniversalUtils
 import com.authguardian.mobileapp.viewmodel.NsdServerViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class NsdServerFragment : BaseFragment<FragmentNsdServerBinding>(FragmentNsdServerBinding::inflate), View.OnClickListener {
 
@@ -41,17 +46,19 @@ class NsdServerFragment : BaseFragment<FragmentNsdServerBinding>(FragmentNsdServ
         }
 
         viewModel.startServerSocket()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-        viewModel.receivedMessage.observe(viewLifecycleOwner) { message ->
-            if (message.isNullOrEmpty()) {
-                return@observe
+                viewModel.receivedMessage.collectLatest { message ->
+                    binding.txtMessage.text = message
+                }
+                viewModel.isLoading.collectLatest { isLoading ->
+                    binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+                }
+
             }
-            binding.txtMessage.text = message
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
         binding.btnBack.setOnClickListener(this@NsdServerFragment)
     }
 
