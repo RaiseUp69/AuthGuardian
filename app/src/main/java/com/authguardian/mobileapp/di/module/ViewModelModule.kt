@@ -1,7 +1,6 @@
 package com.authguardian.mobileapp.di.module
 
 import com.authguardian.mobileapp.constant.ModulesConstant.VIEW_MODEL_MODULE
-import com.authguardian.mobileapp.viewmodel.AuthMethodViewModel
 import com.authguardian.mobileapp.viewmodel.AuthorizationViewModel
 import com.authguardian.mobileapp.viewmodel.DatabaseViewModel
 import com.authguardian.mobileapp.viewmodel.GoogleSignInSuccessfulViewModel
@@ -12,12 +11,6 @@ import org.kodein.di.instance
 val viewModelModule = DI.Module(VIEW_MODEL_MODULE) {
 
     bindProvider {
-        AuthMethodViewModel(
-            instance()
-        )
-    }
-
-    bindProvider {
         GoogleSignInSuccessfulViewModel(
             instance()
         )
@@ -25,6 +18,7 @@ val viewModelModule = DI.Module(VIEW_MODEL_MODULE) {
 
     bindProvider {
         DatabaseViewModel(
+            instance(),
             instance(),
             instance(),
             instance(),

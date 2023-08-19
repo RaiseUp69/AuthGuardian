@@ -104,27 +104,16 @@
             app:layout_constraintTop_toBottomOf="@+id/btnQrCode" />
 
         <Button
-            android:id="@+id/btnTestMessage"
-            style="@style/Widget.AuthGuardian.Button.Material"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Post message to server"
-            app:icon="@drawable/ic_message"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnSocialLogin"
-            tools:ignore="HardcodedText" />
-
-        <Button
             android:id="@+id/btnNavigateToDatabase"
             style="@style/Widget.AuthGuardian.Button.Material"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="@string/server_data"
             app:icon="@drawable/ic_dataset"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnTestMessage" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSocialLogin" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
