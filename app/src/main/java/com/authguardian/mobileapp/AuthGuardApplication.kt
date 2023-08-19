@@ -3,7 +3,7 @@ package com.authguardian.mobileapp
 import android.app.Application
 import android.content.Context
 import com.authguardian.mobileapp.constant.DIConstant.SERVER_URL_TAG
-import com.authguardian.mobileapp.constant.NETWORK.SERVER_URL
+import com.authguardian.mobileapp.constant.Network.SERVER_URL
 import com.authguardian.mobileapp.di.module.adapterModule
 import com.authguardian.mobileapp.di.module.coroutineModule
 import com.authguardian.mobileapp.di.module.networkModule
