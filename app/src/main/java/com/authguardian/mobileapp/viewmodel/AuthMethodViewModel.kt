@@ -8,5 +8,6 @@ class AuthMethodViewModel : ViewModel() {
 
     fun init() {
         sendEvent(AnalyticsEventScreen.AUTH_METHOD_SCRN__VIEW.value)
+
     }
 }
